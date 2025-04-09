@@ -124,7 +124,7 @@ const mostrarMensajeError = (mensaje) => {
 
 const limpiarErrores = () => {
   const errorDiv = document.getElementById('error-mensajes');
-  errorDiv.innerHTML = '';  // Limpiar los errores previos
+  errorDiv.innerHTML = ' ';  // Limpiar los errores previos
 };
 
 const validarRegion = (region) => {
@@ -179,8 +179,12 @@ const validarTema = (tema, otroTemaInput) => {
   return null;
 };
 
-const validarContactos = (contactar, infoContactoDiv) => {
-  if (contactar.selectedOptions.length > 5) return "No puede seleccionar más de 5 medios de contacto.";
+const validarContactos = (contactarDiv, infoContactoDiv) => {
+  const checkboxesSeleccionados = contactarDiv.querySelectorAll('input[name="contactar"]:checked');
+  
+  if (checkboxesSeleccionados.length > 5) {
+    return "No puede seleccionar más de 5 medios de contacto.";
+  }
 
   const contactoInputs = infoContactoDiv.querySelectorAll('input');
   for (let input of contactoInputs) {
@@ -211,7 +215,7 @@ const validarFormulario = (e) => {
   const nombre = form.nombre.value.trim();
   const email = form.email.value.trim();
   const telefono = form.telefono.value.trim();
-  const contactar = form.contactar;
+  const contactarDiv = document.getElementById('contactar-options');
   const inicio = form.inicio.value.trim();
   const termino = form.termino.value.trim();
   const tema = form.tema.value.trim();
@@ -230,7 +234,7 @@ const validarFormulario = (e) => {
   errores.push(validarFechaInicio(inicio));
   errores.push(validarFechaTermino(inicio, termino));
   errores.push(validarTema(tema, otroTemaInput));
-  errores.push(validarContactos(contactar, infoContactoDiv));
+  errores.push(validarContactos(contactarDiv, infoContactoDiv));
   errores.push(validarFotos(fotos));
 
   // Filtrar errores nulos y mostrar mensaje
@@ -255,12 +259,19 @@ const confirmarEnvio = () => {
   document.getElementById('mensaje-final').style.display = 'block';
 };
 
-// === Event listeners ===
-document.getElementById('region').addEventListener('change', actualizarComunas);
-document.getElementById('tema').addEventListener('change', mostrarCampoOtroTema);
-document.getElementById('agregar-foto').addEventListener('click', agregarCampoFoto);
-document.getElementById('form-actividad').addEventListener('submit', validarFormulario);
-document.getElementById('confirmar').addEventListener('click', confirmarEnvio);
+const cancelarConfirmacion = () => {
+  document.getElementById('confirmacion').style.display = 'none';
+  document.getElementById('form-actividad').style.display = 'block';
+};
 
-// Inicializar elementos del formulario
-poblarRegiones();
+// === Event listeners ===
+window.onload = () => {
+  poblarRegiones();
+  document.getElementById('region').addEventListener('change', actualizarComunas);
+  document.getElementById('tema').addEventListener('change', mostrarCampoOtroTema);
+  document.getElementById('agregar-foto').addEventListener('click', agregarCampoFoto);
+  document.getElementById('contactar-options').addEventListener('change', mostrarOtraFormaContacto);
+  document.getElementById('form-actividad').addEventListener('submit', validarFormulario);
+  document.getElementById('confirmar-si').addEventListener('click', confirmarEnvio);
+  document.getElementById('confirmar-no').addEventListener('click', cancelarConfirmacion);
+};
