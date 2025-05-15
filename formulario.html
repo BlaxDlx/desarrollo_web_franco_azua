@@ -15,30 +15,36 @@
             <label for="region">Región:</label>
             <select id="region" name="region">
                 <option value="">Seleccione una región</option>
-            </select><br><br>
+            </select>
+            <span class="error-campo" id="error-region" style = "display: none;"></span>
 
             <label for="comuna">Comuna:</label>
             <select id="comuna" name="comuna" disabled>
                 <option value="">Seleccione una comuna</option>
-            </select><br><br>
+            </select>
+            <span class="error-campo" id="error-comuna" style = "display: none;"></span>
 
             <label for="sector">Sector (opcional):</label>
             <input type="text" id="sector" name="sector" maxlength="100">
+            <span class="error-campo" id="error-sector" style = "display: none;"></span>
         </fieldset>
         
         <!-- ¿Quién organiza? -->
         <fieldset>
             <legend>¿Quién organiza?</legend>
             <label for="nombre">Nombre del organizador:</label>
-            <input type="text" id="nombre" name="nombre" maxlength="200"><br><br>
+            <input type="text" id="nombre" name="nombre" maxlength="200">
+            <span class="error-campo" id="error-nombre" style = "display: none;"></span>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" maxlength="100"><br><br>
+            <input type="email" id="email" name="email" maxlength="100">
+            <span class="error-campo" id="error-email" style = "display: none;"></span>
 
             <label for="telefono">Número de celular:</label>
-            <input type="tel" id="telefono" name="telefono" placeholder="+569.12345678"><br><br>
+            <input type="tel" id="telefono" name="telefono" placeholder="+569.12345678">
+            <span class="error-campo" id="error-telefono" style = "display: none;"></span>
 
-            <label for="contactar">Contactar por:</label><br>
+            <label for="contactar">Contactar por:</label>
             <div id="contactar-options">
                 <input type="checkbox" id="whatsapp" name="contactar" value="whatsapp"> WhatsApp<br>
                 <input type="checkbox" id="telegram" name="contactar" value="telegram"> Telegram<br>
@@ -47,20 +53,28 @@
                 <input type="checkbox" id="tiktok" name="contactar" value="tiktok"> TikTok<br>
                 <input type="checkbox" id="otra" name="contactar" value="otra"> Otra<br>
             </div>
+            <div id ="contactar-otra"></div>
+            <span class="error-campo" id="error-otro-contacto" style = "display: none;"></span>
             <div id="info-contacto"></div>
+            <span class="error-campo" id="error-contactar-options" style = "display: none;"></span>
         </fieldset>
 
         <!-- ¿Cuándo y de qué trata? -->
         <fieldset>
             <legend>¿Cuándo y de qué trata?</legend>
             <label for="inicio">Día y hora de inicio:</label>
-            <input type="datetime-local" id="inicio" name="inicio"><br><br>
-
-            <label for="termino">Día y hora de término (opcional):</label>
-            <input type="datetime-local" id="termino" name="termino"><br><br>
-
+            <input type="datetime-local" id="inicio" name="inicio">
+            <span class="error-campo" id="error-inicio" style = "display: none;"></span>
+            <label>
+                <input type="checkbox" id="indicar-termino" name="indicar-termino" value="termino">
+                <span style = "margin-left: 5px"> Día y hora de término (opcional):</span> 
+            </label>
+            <input type="datetime-local" id="termino" name="termino" style="display: none;">
+            <br>
+            <span class="error-campo" id="error-termino" style = "display: none;"></span>
+            </div>
             <label for="descripcion">Descripción (opcional):</label><br>
-            <textarea id="descripcion" name="descripcion" cols="50" rows="10"></textarea><br><br>
+            <textarea id="descripcion" name="descripcion" cols="50" rows="10"></textarea>
 
             <label for="tema">Tema:</label>
             <select id="tema" name="tema">
@@ -76,12 +90,15 @@
                 <option value="comida">Comida</option>
                 <option value="otro">Otro</option>
             </select>
-            <div id="otro-tema"></div><br><br>
+            <div id="otro-tema"></div>
+            <span class="error-campo" id="error-tema" style = "display: none;"></span>
 
-            <label for="foto1">Foto:</label>
+            <label for="foto1">Foto (máximo 5):</label>
             <input type="file" id="foto1" name="foto[]" accept="image/*"><br>
-            <button type="button" id="agregar-foto">Agregar otra foto</button><br><br>
             <div id="fotos-extra"></div>
+            <button type="button" id="agregar-foto">Agregar otra foto</button>
+            <span class="error-campo" id="error-foto1" style = "display: none;"></span>
+            
         </fieldset>
 
         <!-- Botón final -->
