@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Agregar nueva actividad</title>
-    <link rel="stylesheet" href="css/formulario.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/formulario.css') }}">
 </head>
 <body>
     <h1>Agregar nueva actividad recreativa</h1>
@@ -117,6 +117,6 @@
         <button onclick="location.href='index.html'">Volver a la portada</button>
     </div>
 
-    <script type="module" src="js/formulario.js"></script>
+    <script type="module" src="{{ url_for('static', filename= 'js/formulario.js')}}"></script>
 </body>
 </html>

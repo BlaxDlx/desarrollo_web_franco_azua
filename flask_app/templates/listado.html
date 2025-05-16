@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Listado de Actividades</title>
-  <link rel="stylesheet" href="css/listado.css">
-  <script defer src="js/listado.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/listado.css') }}">
+  <script defer src="{{ url_for('static', filename='js/listado.js') }}"></script>
 </head>
 <body>
   <h1>Listado de Actividades</h1>
@@ -83,7 +83,7 @@
   <div id="detalle-actividad" style="display:none;">
     <div id="contenido-detalle"></div>
     <button class="boton" onclick="volverAlListado()">🔙 Volver al listado</button>
-    <button class="boton" onclick="location.href='index.html'">🏠 Volver a portada</button>
+    <button class="boton" onclick="location.href='{{ url_for('portada') }}'">🏠 Volver a portada</button> <!-- Debo crear una función llamada portada-->
   </div>
 
   <!-- Modal para ampliar foto -->

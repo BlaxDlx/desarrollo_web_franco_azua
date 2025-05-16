@@ -3,7 +3,7 @@
 <head>
     <meta charset = "UTF-8">
     <title>Actividades recreativas para ti</title> 
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <div class="header">
@@ -49,7 +49,7 @@
                 <td>Santiago</td>
                 <td>Beauchef 850, terraza</td>
                 <td>Escuela de Boxeo</td>
-                <td><img src="uploads/boxeo.png" alt="Niño con guantes de boxeo" width="130"></td>
+                <td><img src="{{ url_for('static', filename = 'uploads/boxeo.png') }}" alt="Niño con guantes de boxeo" width="130"></td>
             </tr>
             <tr>
                 <td>2025-03-29 19:00</td>
@@ -57,7 +57,7 @@
                 <td>Ñuñoa</td>
                 <td>Plaza</td>
                 <td>Cómo deshidratar fruta</td>
-                <td><img src="uploads/frutas.png" alt="Frutas deshidratadas" width="150"></td>
+                <td><img src="{{ url_for('static', filename = 'uploads/frutas.png') }}" alt="Frutas deshidratadas" width="150"></td>
             </tr>
             <tr>
                 <td>2025-04-02 10:00</td>
@@ -65,7 +65,7 @@
                 <td>Providencia</td>
                 <td>Parque Inés de Suárez</td>
                 <td>Taller de cerámica básica</td>
-                <td><img src="uploads/ceramica.png" alt="Taller de cerámica" width="150"></td>
+                <td><img src="{{ url_for('static', filename = 'uploads/ceramica.png') }}" alt="Taller de cerámica" width="150"></td>
             </tr>
             <tr>
                 <td>2025-04-03 16:00</td>
@@ -73,7 +73,7 @@
                 <td>La Reina</td>
                 <td>Casa de la Cultura</td>
                 <td>Pintura al aire libre</td>
-                <td><img src="uploads/pintura.png" alt="Pintura al aire libre" width="150"></td>
+                <td><img src="{{ url_for('static', filename = 'uploads/pintura.png') }}" alt="Pintura al aire libre" width="150"></td>
             </tr>
             <tr>
                 <td>2025-04-05 09:00</td>
@@ -81,7 +81,7 @@
                 <td>Recoleta</td>
                 <td>Huerto Urbano Recoleta</td>
                 <td>Introducción a la huerta</td>
-                <td><img src="uploads/huerto.png" alt="Taller de huerta urbana" width="150"></td>
+                <td><img src="{{ url_for('static', filename = 'uploads/huerto.png') }}" alt="Taller de huerta urbana" width="150"></td>
             </tr>
             
         </tbody>
