@@ -98,6 +98,12 @@ def get_comuna_by_nombre(nombre):
     session.close()
     return comuna
 
+def get_ultimas_actividades(limit):
+    session = SessionLocal()
+    actividades = session.query(Actividad).order_by(Actividad.dia_hora_inicio.desc()).limit(limit).all()
+    session.close()
+    return actividades
+
 # Create new registers in the database
 def create_actividad(id,comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion):
     session = SessionLocal()
