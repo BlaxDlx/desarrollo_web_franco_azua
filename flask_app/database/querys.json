@@ -1,5 +1,4 @@
 {
-    "get_ultimas_actividades": "SELECT * FROM actividad",
     "create_actividad": "INSERT INTO actividad (comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
     "create_actividad_tema": "INSERT INTO actividad_tema (actividad_id, tema, glosa_otro) VALUES (%s, %s, %s)",
     "create_contactar_por": "INSERT INTO contactar_por (actividad_id, nombre, identificador) VALUES (%s, %s, %s)",
