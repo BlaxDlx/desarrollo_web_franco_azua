@@ -106,6 +106,12 @@ tr:hover {
   align-items: center;
 }
 
+#contenedor-modal {
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
 #modal-foto img {
   width: 800px;
   height: 600px;
@@ -117,15 +123,15 @@ tr:hover {
   position: absolute;
   top: 40px;
   right: 60px;
-  background-color: #ffffffcc;
+  background-color: #0066cc;
   border: none;
   font-size: 16px;
   padding: 10px 16px;
   border-radius: 4px;
   cursor: pointer;
-  color: black;
+  color: white;
 }
 
 #modal-foto button:hover {
-  background-color: white;
+  background-color: #004999;
 }
