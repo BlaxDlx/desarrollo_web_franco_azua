@@ -55,10 +55,10 @@ class Actividad(Base):
 
     @property
     def hora_inicio(self):
-        return self.dia_hora_inicio.strftime('%H:%M')
+        return self.dia_hora_inicio.strftime('%Y-%m-%d %H:%M')
     @property
     def hora_termino(self):
-        return self.dia_hora_termino.strftime('%H:%M') if self.dia_hora_termino else ""
+        return self.dia_hora_termino.strftime('%Y-%m-%d %H:%M') if self.dia_hora_termino else ""
 
 class Foto(Base):
     __tablename__ = 'foto'
@@ -104,7 +104,10 @@ def get_todas_las_actividades():
 
 def get_ultimas_actividades(limit):
     session = SessionLocal()
-    actividades = session.query(Actividad).order_by(Actividad.dia_hora_inicio.desc()).limit(limit).all()
+    # Get the last 'limit' activities added to the database
+    actividades = session.query(Actividad)\
+        .options(joinedload(Actividad.comuna), joinedload(Actividad.fotos), joinedload(Actividad.tema), joinedload(Actividad.contactos))\
+        .order_by(Actividad.id.desc()).limit(limit).all()
     session.close()
     return actividades
 
