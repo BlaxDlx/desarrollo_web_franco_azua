@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum
-from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+from sqlalchemy.orm import sessionmaker, declarative_base, relationship, joinedload
 
 DB_NAME = 'tarea2'
 DB_USERNAME = 'cc5002'
@@ -10,27 +10,27 @@ DB_CHARSET = 'utf8'
 
 DATABASE_URL = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?charset={DB_CHARSET}'
 
-engine = create_engine(DATABASE_URL, echo=True, future =True)
+engine = create_engine(DATABASE_URL, echo=False, future =True)
 SessionLocal = sessionmaker(bind=engine)
 
 Base = declarative_base()
 
 # --- Models ---
 
-class Comuna(Base):
-    _tablename__ = 'comuna'
-
-    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    nombre = Column(String(200), nullable=False)
-    regionid = Column(Integer,ForeignKey('region.id') ,nullable=False)
-
-    comunas = relationship("Comuna", back_populates="region")
-
 class Region(Base):
-    _tablename__ = 'region'
+    __tablename__ = 'region'
 
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     nombre = Column(String(200), nullable=False)
+
+    comunas = relationship("Comuna", back_populates="region") 
+
+class Comuna(Base):
+    __tablename__ = 'comuna'
+
+    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    nombre = Column(String(200), nullable=False)
+    region_id = Column(Integer,ForeignKey('region.id') ,nullable=False)
 
     region = relationship("Region", back_populates="comunas")
     actividades = relationship("Actividad", back_populates="comuna")
@@ -51,7 +51,14 @@ class Actividad(Base):
     comuna = relationship("Comuna", back_populates="actividades")
     fotos = relationship("Foto", back_populates="actividad")
     contactos = relationship("ContactarPor", back_populates="actividad")
-    temas = relationship("ActividadTema", back_populates="actividad")
+    tema = relationship("ActividadTema", back_populates="actividad", uselist=False)
+
+    @property
+    def hora_inicio(self):
+        return self.dia_hora_inicio.strftime('%H:%M')
+    @property
+    def hora_termino(self):
+        return self.dia_hora_termino.strftime('%H:%M') if self.dia_hora_termino else ""
 
 class Foto(Base):
     __tablename__ = 'foto'
@@ -81,22 +88,19 @@ class ActividadTema(Base):
     glosa_otro = Column(String(15), nullable=True)
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
 
-    actividad = relationship("Actividad", back_populates="temas")
+    actividad = relationship("Actividad", back_populates="tema")
 
 # --- Database Functions ---
 
 # Get registers from the database (en proceso)
-def get_comuna_by_id(id):
-    session = SessionLocal()
-    comuna = session.query(Comuna).filter(Comuna.id == id).first()
-    session.close()
-    return comuna
 
-def get_comuna_by_nombre(nombre):
+def get_todas_las_actividades():
     session = SessionLocal()
-    comuna = session.query(Comuna).filter(Comuna.nombre == nombre).first()
+    actividades = session.query(Actividad)\
+        .options(joinedload(Actividad.comuna), joinedload(Actividad.fotos), joinedload(Actividad.tema), joinedload(Actividad.contactos))\
+        .all()
     session.close()
-    return comuna
+    return actividades
 
 def get_ultimas_actividades(limit):
     session = SessionLocal()

@@ -135,3 +135,17 @@ tr:hover {
 #modal-foto button:hover {
   background-color: #004999;
 }
+
+/* Paginación */
+.paginacion .boton {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 8px 16px;
+  background: #0066cc;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.paginacion .boton:hover {
+  background: #004999;
+}
