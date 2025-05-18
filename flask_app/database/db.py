@@ -111,6 +111,14 @@ def get_ultimas_actividades(limit):
     session.close()
     return actividades
 
+def get_regiones():
+    session = SessionLocal()
+    regiones = session.query(Region)\
+        .options(joinedload(Region.comunas))\
+        .all()
+    session.close()
+    return regiones
+
 # Create new registers in the database
 def create_actividad(id,comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion):
     session = SessionLocal()

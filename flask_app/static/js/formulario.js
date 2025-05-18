@@ -1,29 +1,29 @@
-import regionComuna from './region_comuna.js';
-
 // === Funciones de inicialización ===
 const poblarRegiones = () => {
   const regionSelect = document.getElementById('region');
-  for (const region in regionComuna) {
+  regionSelect.innerHTML = '<option value="">Seleccione una región</option>'; // No sé si será necesario, pero lo pongo por si acaso
+  regionesJson.forEach(region => {
     let option = document.createElement('option');
-    option.value = region;
-    option.textContent = region;
+    option.value = region.id;
+    option.textContent = region.nombre;
     regionSelect.appendChild(option);
-  }
+  });
 };
 
 const actualizarComunas = () => {
   const regionSelect = document.getElementById('region');
   const comunaSelect = document.getElementById('comuna');
-  const region = regionSelect.value;
+  const regionId = parseInt(regionSelect.value);
 
-  comunaSelect.innerHTML = '<option value="">Seleccione una comuna</option>';
+  comunaSelect.innerHTML = '<option value="">Seleccione una comuna</option>'; // Limpiar las comunas previas
   comunaSelect.disabled = true; // Para evitar que se seleccione antes de cargar
-
-  if (region && regionComuna[region]) {
-    regionComuna[region].forEach(comuna => {
+  
+  const region = regionesJson.find(r => r.id === regionId);
+  if (region && region.comunas) {
+    region.comunas.forEach(comuna => {
       let option = document.createElement('option');
-      option.value = comuna;
-      option.textContent = comuna;
+      option.value = comuna.id;
+      option.textContent = comuna.nombre;
       comunaSelect.appendChild(option);
     });
     comunaSelect.disabled = false; // Una vez cargadas las comunas, habilitar el select
