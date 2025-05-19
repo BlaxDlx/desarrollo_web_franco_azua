@@ -104,10 +104,10 @@ def formulario():
                 str(formulario["descripcion"])
             )
             # Guardar el tema
-            db.create_actividad_tema(actividad.id, formulario.tema, formulario.otro_tema)
+            db.create_actividad_tema(actividad.id, formulario["tema"], formulario["otro_tema"])
 
             # Guardar los medios de contacto
-            for medio in formulario.contactar:
+            for medio in formulario["contactar"]:
                 # Como no se pudo sanitizar estos campos dinámicos en las validaciones, se sanitizan aquí
                 identificador = str(escape(request.form.get(f"contacto-{medio}")))
                 if medio == "otra":
@@ -117,7 +117,7 @@ def formulario():
                 else:
                     db.create_contactar_por(actividad.id, medio, identificador)
             # Guardar las fotos
-            for archivo in formulario.archivos:
+            for archivo in formulario["archivos"]:
                 if archivo and archivo.filename:
                     filename = secure_filename(archivo.filename)
                     ruta_archivo = f"{UPLOAD_FOLDER}/{filename}"

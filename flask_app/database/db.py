@@ -127,6 +127,7 @@ def create_actividad(comuna_id, sector, nombre, email, celular, dia_hora_inicio,
                           dia_hora_termino=dia_hora_termino, descripcion=descripcion)
     session.add(actividad)
     session.commit()
+    session.refresh(actividad)
     session.close()
     return actividad
 
@@ -135,6 +136,7 @@ def create_actividad_tema(actividad_id, tema, glosa_otro):
     actividad_tema = ActividadTema(actividad_id=actividad_id, tema=tema, glosa_otro=glosa_otro)
     session.add(actividad_tema)
     session.commit()
+    session.refresh(actividad_tema)
     session.close()
     return actividad_tema
 
@@ -143,6 +145,7 @@ def create_contactar_por(actividad_id, nombre, identificador):
     contactar_por = ContactarPor(actividad_id=actividad_id, nombre=nombre, identificador=identificador)
     session.add(contactar_por)
     session.commit()
+    session.refresh(contactar_por)
     session.close()
     return contactar_por
 
@@ -152,5 +155,6 @@ def create_foto(actividad_id, ruta_archivo, nombre_archivo):
     foto = Foto(actividad_id=actividad_id, ruta_archivo=ruta_archivo, nombre_archivo=nombre_archivo)
     session.add(foto)
     session.commit()
+    session.refresh(foto)
     session.close()
     return foto
