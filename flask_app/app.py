@@ -79,6 +79,8 @@ def formulario():
             "contactar": request.form.getlist("contactar"),
             "archivos": request.files.getlist("foto[]")
         }
+        # Convertir a None los campos de tipo fecha que no se enviaron
+        formulario["termino"] = formulario["termino"] or None
 
         # Validar los datos del formulario
         errores = validate_formulario(formulario, request.form)
