@@ -70,7 +70,13 @@
                     {{ actividad.tema.tema }}
                     {% endif %}
                 </td>
-                <td><img src="{{ url_for('static', filename=actividad.fotos[0].ruta_archivo) }}" alt="Foto actividad" width="140"></td>
+                <td>
+                    {% if actividad.fotos and actividad.fotos|length > 0 %}
+                        <img src="{{ url_for('static', filename=actividad.fotos[0].ruta_archivo) }}" alt="Foto actividad" width="140">
+                    {% else %}
+                        <span>Sin foto</span>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

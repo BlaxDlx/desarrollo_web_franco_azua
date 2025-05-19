@@ -128,6 +128,7 @@ def create_actividad(comuna_id, sector, nombre, email, celular, dia_hora_inicio,
     session.add(actividad)
     session.commit()
     session.refresh(actividad)
+    session.flush()
     session.close()
     return actividad
 
