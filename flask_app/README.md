@@ -18,3 +18,6 @@ Fuentes:
 Como en la sección anterior, también hice el mismo procedimiento para pasar las regiones y comunas para el prellenado que se realiza en el JS, sin embargo, puse la API correspondiente para en la tarea 3 usarla.
 
 Tal vez no era necesario cargarlos desde la base de datos, pero me hizo más sentido debido a que ya las tenemos, además cualquier modificación que queramos hacerle a las opciones disponibles de regiones y comunas, solo tendríamos que modificar la base de datos, por lo que lo sentía más eficiente.
+
+### Otros comentarios
+No alcancé a arreglarlo a tiempo, pero al menos arreglé lo más feo antes de las 00:00 (o eso creo, no me fijé en la hora que fui enviando los arreglos), así que igual dejo todo bien, o al menos espero que lo esté ahora.
