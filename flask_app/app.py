@@ -3,6 +3,7 @@ from database import db
 from werkzeug.utils import secure_filename
 from markupsafe import escape
 from utils.validations import validate_formulario
+import os
 UPLOAD_FOLDER = 'static/uploads'
 
 app = Flask(__name__)
@@ -120,8 +121,8 @@ def formulario():
             for archivo in formulario["archivos"]:
                 if archivo and archivo.filename:
                     filename = secure_filename(archivo.filename)
-                    ruta_archivo = f"{UPLOAD_FOLDER}/{filename}"
-                    archivo.save(ruta_archivo)
+                    ruta_archivo = f"uploads/{filename}"
+                    archivo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     db.create_foto(actividad.id, ruta_archivo, filename)
 
             # Redirigir a la página de listado
