@@ -201,36 +201,37 @@ const validarComuna = (comuna) => {
 };
 
 const validarSector = (sector) => {
-  if (sector.length > 100) return "El sector no puede exceder los 100 caracteres."; // Es opcional y no debe exceder 100 caracteres
+  if (sector && sector.length > 100) return "El sector no puede exceder los 100 caracteres."; // Es opcional y no debe exceder 100 caracteres
   return null;
 };
 
-const validarNombre = (nombre) => {
+const validarNombre = (nombre) => { 
+  // Es obligatorio y no debe exceder 200 caracteres
   if (!nombre || nombre.length > 200) return "El nombre del organizador es obligatorio y debe tener como máximo 200 caracteres.";
   return null;
 };
 
 const validarEmail = (email) => {
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 100) {
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 100) { // Es obligatorio y debe tener el formato correcto
     return "Debe ingresar un email válido (máx. 100 caracteres).";
   }
   return null;
 };
 
 const validarTelefono = (telefono) => {
-  if (!telefono || !/^\+\d{3}\.\d{8}$/.test(telefono)) {
+  if (telefono && !/^\+\d{3}\.\d{8}$/.test(telefono)) {  // Es opcional, pero si se ingresa, debe tener el formato +NNN.NNNNNNNN
     return "El número de celular debe tener el formato +NNN.NNNNNNNN, por ejemplo: +569.12345678.";
   }
   return null;
 };
 
 const validarFechaInicio = (inicio) => {
-  if (!inicio) return "Debe indicar la fecha y hora de inicio.";
+  if (!inicio) return "Debe indicar la fecha y hora de inicio."; // Es obligatorio
   return null;
 };
 
 const validarFechaTermino = (inicio, termino) => {
-  if (termino && termino <= inicio) return "La fecha de término debe ser posterior a la de inicio.";
+  if (termino && termino <= inicio) return "La fecha de término debe ser posterior a la de inicio."; // Es opcional, pero si se ingresa, debe ser posterior a la de inicio
   return null;
 };
 
@@ -413,6 +414,22 @@ const mostrarConfirmacion = () => {
 const confirmarEnvio = () => {
   document.getElementById('confirmacion').style.display = 'none';
   document.getElementById('mensaje-final').style.display = 'block';
+  // Enviamos un submit real:
+  document.getElementById('form-actividad').submit();
+  // O si se quiere hacer una petición AJAX, se puede hacer aquí
+  // fetch('/ruta/a/tu/api', {
+  //   method: 'POST',
+  //   body: new FormData(document.getElementById('form-actividad'))
+  // })
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log('Success:', data);
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error:', error);
+  //   });
+  // Aquí puedes manejar la respuesta del servidor
+  // y mostrar un mensaje de éxito o error.
 };
 
 const cancelarConfirmacion = () => {

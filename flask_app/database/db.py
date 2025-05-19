@@ -120,9 +120,9 @@ def get_regiones():
     return regiones
 
 # Create new registers in the database
-def create_actividad(id,comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion):
+def create_actividad(comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion):
     session = SessionLocal()
-    actividad = Actividad(id=id, comuna_id=comuna_id, sector=sector, nombre=nombre, email=email,
+    actividad = Actividad(comuna_id=comuna_id, sector=sector, nombre=nombre, email=email,
                           celular=celular, dia_hora_inicio=dia_hora_inicio,
                           dia_hora_termino=dia_hora_termino, descripcion=descripcion)
     session.add(actividad)

@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <title>Agregar nueva actividad</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/formulario.css') }}">
+    <script>
+    const regionesJson = {{ regiones|tojson }};
+    </script>
+    <script type="module" defer src="{{ url_for('static', filename= 'js/formulario.js')}}"></script>
 </head>
 <body>
     <h1>Agregar nueva actividad recreativa</h1>
-    <ul id="error-mensajes" style="color: red; list-style-type: none;"></ul>
-    <form id="form-actividad">
+    <ul id="error-mensajes" style="color: red; list-style-type: none;">
+        {% if errores %}
+            {% for campo, mensaje in errores.items() %}
+                <li><strong>Error en {{ campo }}:</strong> {{ mensaje }}</li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+    <form id="form-actividad" method = "POST" enctype="multipart/form-data">
         <!-- ¿Dónde? -->
         <fieldset>
             <legend>¿Dónde?</legend>
@@ -114,9 +124,8 @@
     <!-- Mensaje de éxito -->
     <div id="mensaje-final" style="display: none;">
         <p>Hemos recibido su información, muchas gracias y suerte en su actividad.</p>
-        <button onclick="location.href='index.html'">Volver a la portada</button>
+        <button onclick="location.href='{{url_for('portada')}}'">Volver a la portada</button>
     </div>
 
-    <script type="module" src="{{ url_for('static', filename= 'js/formulario.js')}}"></script>
 </body>
 </html>

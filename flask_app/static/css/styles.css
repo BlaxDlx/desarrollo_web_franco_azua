@@ -1,15 +1,18 @@
 
 body{
     font-family: 'Roboto', sans-serif;
-    margin: 10px;
     padding: 0;
     font-size: 15px;
 }
 
+.acciones{
+  margin: 10px;
+}
+
 .header{
     text-align: center;
-    margin: 20px 18px;
-    line-height: 1.5;
+    margin: 0;
+    padding: 0;
     font-size: 30px;
     line-height: 55px;
     background-color: #f3bd59;
@@ -86,4 +89,13 @@ background-color: #f2f2f2;
 
 .mi-tabla tr:hover {
 background-color: #f9f9f9;
+}
+
+.mensaje-exito {
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
 }

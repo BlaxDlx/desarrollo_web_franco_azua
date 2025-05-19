@@ -1,7 +1,8 @@
 from flask import Flask, request, render_template, redirect, url_for, session, jsonify
 from database import db
 from werkzeug.utils import secure_filename
-
+from markupsafe import escape
+from utils.validations import validate_formulario
 UPLOAD_FOLDER = 'static/uploads'
 
 app = Flask(__name__)
@@ -53,17 +54,76 @@ def regionesToDict(regiones):
 # --- Routes ---
 @app.route("/")
 def portada():
+    # Si hay un mensaje de parte de formulario, enviarlo a la plantilla
+    mensaje = request.args.get("mensaje")
     # Aquí se obtienen las 5 actividades de la base de datos
     actividades = db.get_ultimas_actividades(5)
-    return render_template("index.html", actividades=actividades)
+    return render_template("index.html", actividades = actividades, mensaje = mensaje)
 
 @app.route("/formulario", methods=["GET", "POST"])
 def formulario():
     if request.method == "POST":
-        # Validar y guardar en la base de datos
-        # Si hay error, render_template con errores
-        # Si todo bien, redirect a portada con mensaje
-        pass
+        # Se obtienen los datos del formulario
+        formulario = {
+            "region_id": request.form.get("region"),
+            "comuna_id": request.form.get("comuna"),
+            "sector": request.form.get("sector", ""),
+            "nombre": request.form.get("nombre"),
+            "email": request.form.get("email"),
+            "telefono": request.form.get("telefono", ""),
+            "inicio": request.form.get("inicio"),
+            "termino": request.form.get("termino", ""),
+            "descripcion": request.form.get("descripcion"),
+            "tema": request.form.get("tema"),
+            "otro_tema": request.form.get("otro-tema",""), 
+            "contactar": request.form.getlist("contactar"),
+            "archivos": request.files.getlist("foto[]")
+        }
+
+        # Validar los datos del formulario
+        errores = validate_formulario(formulario, request.form)
+        if errores:
+            # Si hay errores, render_template con errores
+            return render_template(
+                "formulario.html", 
+                errores=errores, 
+                regiones=regionesToDict(db.get_regiones())
+                )
+        else:
+            # Si todo bien, guardar en la base de datos con los datos sanitizados
+            actividad = db.create_actividad(
+                formulario["comuna_id"],
+                formulario["sector"],
+                formulario["nombre"],
+                formulario["email"],
+                formulario["telefono"],
+                formulario["inicio"],
+                formulario["termino"],
+                formulario["descripcion"]
+            )
+            # Guardar el tema
+            db.create_actividad_tema(actividad.id, formulario.tema, formulario.otro_tema)
+
+            # Guardar los medios de contacto
+            for medio in formulario.contactar:
+                # Como no se pudo sanitizar estos campos dinámicos en las validaciones, se sanitizan aquí
+                identificador = escape(request.form.get(f"contacto-{medio}"))
+                if medio == "otra":
+                    nombre_otro = escape(request.form.get("contactar-otra"))
+                    # Asumimos que ambos campos se tienen debido a las verificacionoes
+                    db.create_contactar_por(actividad.id, nombre_otro, identificador)
+                else:
+                    db.create_contactar_por(actividad.id, medio, identificador)
+            # Guardar las fotos
+            for archivo in formulario.archivos:
+                if archivo and archivo.filename:
+                    filename = secure_filename(archivo.filename)
+                    ruta_archivo = f"{UPLOAD_FOLDER}/{filename}"
+                    archivo.save(ruta_archivo)
+                    db.create_foto(actividad.id, ruta_archivo, filename)
+
+            # Redirigir a la página de listado
+            return redirect(url_for("portada", mensaje="Actividad agregada correctamente"))
     return render_template("formulario.html", regiones = regionesToDict(db.get_regiones()))
 
 @app.route("/listado")

@@ -12,9 +12,13 @@
         <h1>Actividades recreativas</h1>
     </div>
     <div class="saludo">
-        <h2>
-            ¡Bienvenido/a!, le invitamos a revisar nuestra página para encontrar las actividades perfectas para ti
-        </h2>
+        {% if mensaje %}
+            <h2 class="mensaje-exito">{{ mensaje }}</h2>
+        {% else %}
+            <h2>
+                ¡Bienvenido/a!, le invitamos a revisar nuestra página para encontrar las actividades perfectas para ti
+            </h2>
+        {% endif %}
     </div>
     <div class="acciones">
         <div class="tarjeta">
