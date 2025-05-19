@@ -92,14 +92,14 @@ def formulario():
         else:
             # Si todo bien, guardar en la base de datos con los datos sanitizados
             actividad = db.create_actividad(
-                formulario["comuna_id"],
-                formulario["sector"],
-                formulario["nombre"],
-                formulario["email"],
-                formulario["telefono"],
+                int(formulario["comuna_id"]),
+                str(formulario["sector"]),
+                str(formulario["nombre"]),
+                str(formulario["email"]),
+                str(formulario["telefono"]),
                 formulario["inicio"],
                 formulario["termino"],
-                formulario["descripcion"]
+                str(formulario["descripcion"])
             )
             # Guardar el tema
             db.create_actividad_tema(actividad.id, formulario.tema, formulario.otro_tema)
@@ -107,9 +107,9 @@ def formulario():
             # Guardar los medios de contacto
             for medio in formulario.contactar:
                 # Como no se pudo sanitizar estos campos dinámicos en las validaciones, se sanitizan aquí
-                identificador = escape(request.form.get(f"contacto-{medio}"))
+                identificador = str(escape(request.form.get(f"contacto-{medio}")))
                 if medio == "otra":
-                    nombre_otro = escape(request.form.get("contactar-otra"))
+                    nombre_otro = str(escape(request.form.get("contactar-otra")))
                     # Asumimos que ambos campos se tienen debido a las verificacionoes
                     db.create_contactar_por(actividad.id, nombre_otro, identificador)
                 else:
