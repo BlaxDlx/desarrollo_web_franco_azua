@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Actividades recreativas para ti</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Actividades recreativas</h1>
+    </div>
+    <div class="saludo">
+        {% if mensaje %}
+            <h2 class="mensaje-exito">{{ mensaje }}</h2>
+        {% else %}
+            <h2>
+                ¡Bienvenido/a!, le invitamos a revisar nuestra página para encontrar las actividades perfectas para ti
+            </h2>
+        {% endif %}
+    </div>
+    <div class="acciones">
+        <div class="tarjeta">
+            <h3>➕ Agregar actividad</h3>
+            <p>Registra una nueva actividad recreativa en el sistema.</p>
+            <button onclick="location.href='{{ url_for('formulario') }}'">Agregar</button>
+        </div>
+        <div class="tarjeta">
+            <h3>📋 Ver listado</h3>
+            <p>Revisa todas las actividades que se han agregado.</p>
+            <button onclick="location.href='{{ url_for('listado') }}'">Ver listado</button>
+        </div>
+        <div class="tarjeta">
+            <h3>📊 Ver estadísticas</h3>
+            <p>Consulta estadísticas generales sobre las actividades.</p>
+            <button onclick="location.href='{{ url_for('estadisticas') }}'">Ver estadísticas</button>
+        </div>
+    </div>
+    <table class="mi-tabla">
+        <thead>
+            <tr>
+                <th>Inicio</th>
+                <th>Término</th>
+                <th>Comuna</th>
+                <th>Sector</th>
+                <th>Tema</th>
+                <th>Foto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for actividad in actividades %}
+            <tr>
+                <td>{{ actividad.hora_inicio }}</td>
+                <td>
+                    {% if actividad.dia_hora_termino %}
+                    {{ actividad.hora_termino }}
+                    {% endif %}
+                </td>
+                <td>{{ actividad.comuna.nombre }}</td>
+                <td>
+                    {% if actividad.sector %}
+                    {{ actividad.sector }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if actividad.tema.tema == 'otro' %}
+                    {{ actividad.tema.glosa_otro }}
+                    {% else %}
+                    {{ actividad.tema.tema }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if actividad.fotos and actividad.fotos|length > 0 %}
+                        <img src="{{ url_for('static', filename=actividad.fotos[0].ruta_archivo) }}" alt="Foto actividad" width="140">
+                    {% else %}
+                        <span>Sin foto</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
