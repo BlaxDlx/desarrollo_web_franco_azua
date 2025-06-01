@@ -1,13 +1,21 @@
+// === Variables globales ===
+let regiones = [];
+
 // === Funciones de inicialización ===
 const poblarRegiones = () => {
-  const regionSelect = document.getElementById('region');
-  regionSelect.innerHTML = '<option value="">Seleccione una región</option>'; // No sé si será necesario, pero lo pongo por si acaso
-  regionesJson.forEach(region => {
-    let option = document.createElement('option');
-    option.value = region.id;
-    option.textContent = region.nombre;
-    regionSelect.appendChild(option);
-  });
+  fetch('/api/regiones')
+    .then(response => response.json())
+    .then(data => {
+      regiones = data;
+      const regionSelect = document.getElementById('region');
+      regionSelect.innerHTML = '<option value="">Seleccione una región</option>';
+      regiones.forEach(region => {
+        let option = document.createElement('option');
+        option.value = region.id;
+        option.textContent = region.nombre;
+        regionSelect.appendChild(option);
+      })
+    })
 };
 
 const actualizarComunas = () => {
@@ -18,7 +26,7 @@ const actualizarComunas = () => {
   comunaSelect.innerHTML = '<option value="">Seleccione una comuna</option>'; // Limpiar las comunas previas
   comunaSelect.disabled = true; // Para evitar que se seleccione antes de cargar
   
-  const region = regionesJson.find(r => r.id === regionId);
+  const region = regiones.find(r => r.id === regionId);
   if (region && region.comunas) {
     region.comunas.forEach(comuna => {
       let option = document.createElement('option');

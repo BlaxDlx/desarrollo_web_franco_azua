@@ -3,6 +3,7 @@ from database import db
 from werkzeug.utils import secure_filename
 from markupsafe import escape
 from utils.validations import validate_formulario
+from utils.utils import actividadesToDict, regionesToDict
 import os
 UPLOAD_FOLDER = 'static/uploads'
 
@@ -10,47 +11,6 @@ app = Flask(__name__)
 
 app.secret_key = "your_secret_key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-# --- Auxiliary Functions ---
-def actividadesToDict(actividades):
-    return [
-        {
-            "id": actividad.id,
-            "nombre": actividad.nombre,
-            "dia_hora_inicio": actividad.hora_inicio,
-            "dia_hora_termino": actividad.hora_termino if actividad.dia_hora_termino else "",
-            "comuna": {"nombre": actividad.comuna.nombre if actividad.comuna else ""},
-            "sector": actividad.sector if actividad.sector else "",
-            "descripcion": actividad.descripcion if actividad.descripcion else "",
-            "celular": actividad.celular if actividad.celular else "",
-            "tema": {
-                "tema": actividad.tema.tema if actividad.tema and actividad.tema.tema else "",
-                "glosa_otro": actividad.tema.glosa_otro if actividad.tema and actividad.tema.glosa_otro else ""
-            } if actividad.tema else {"tema": "", "glosa_otro": ""},
-            "email": actividad.email,
-            "fotos": [
-                {"ruta_archivo": foto.ruta_archivo,"nombre_archivo": foto.nombre_archivo}
-                for foto in actividad.fotos
-            ]
-        }
-        for actividad in actividades
-    ]
-
-def regionesToDict(regiones):
-    return [
-        {
-            "id": r.id,
-            "nombre": r.nombre,
-            "comunas": [
-                {
-                    "id": c.id,
-                    "nombre": c.nombre
-                }
-                for c in r.comunas
-            ]
-        }
-        for r in regiones
-    ]
 
 # --- Routes ---
 @app.route("/")
@@ -89,8 +49,7 @@ def formulario():
             # Si hay errores, render_template con errores
             return render_template(
                 "formulario.html", 
-                errores=errores, 
-                regiones=regionesToDict(db.get_regiones())
+                errores=errores
                 )
         else:
             # Si todo bien, guardar en la base de datos con los datos sanitizados
@@ -127,7 +86,7 @@ def formulario():
 
             # Redirigir a la página de listado
             return redirect(url_for("portada", mensaje="Actividad agregada correctamente"))
-    return render_template("formulario.html", regiones = regionesToDict(db.get_regiones()))
+    return render_template("formulario.html")
 
 @app.route("/listado")
 def listado():
