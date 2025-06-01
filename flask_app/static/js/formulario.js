@@ -61,13 +61,14 @@ const agregarCampoFoto = () => {
   fotosExtraDiv.appendChild(document.createElement('br'));
 };
 
-const mostrarOtraFormaContacto = () => {
+const mostrarInfoContacto = () => {
   const contactarOptions = document.querySelectorAll('input[name="contactar"]:checked');
   const infoContactoDiv = document.getElementById('info-contacto');
   const otroContactoDiv = document.getElementById('contactar-otra');
   
   // Limpiar campos previos
   infoContactoDiv.innerHTML = '';
+  otroContactoDiv.innerHTML = '';
 
   // Iterar sobre las opciones seleccionadas
   contactarOptions.forEach(option => {
@@ -444,7 +445,7 @@ window.onload = () => {
   document.getElementById('region').addEventListener('change', actualizarComunas);
   document.getElementById('tema').addEventListener('change', mostrarCampoOtroTema);
   document.getElementById('agregar-foto').addEventListener('click', agregarCampoFoto);
-  document.getElementById('contactar-options').addEventListener('change', mostrarOtraFormaContacto);
+  document.getElementById('contactar-options').addEventListener('change', mostrarInfoContacto);
   document.getElementById('form-actividad').addEventListener('submit', validarFormulario);
   document.getElementById('confirmar-si').addEventListener('click', confirmarEnvio);
   document.getElementById('confirmar-no').addEventListener('click', cancelarConfirmacion);
