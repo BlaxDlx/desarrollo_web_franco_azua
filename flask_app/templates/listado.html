@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <title>Listado de Actividades</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/listado.css') }}">
-  <script>
-    const actividadesJson = {{ actividadesDict|tojson }};
-  </script>
   <script defer src="{{ url_for('static', filename='js/listado.js') }}"></script>
 </head>
 

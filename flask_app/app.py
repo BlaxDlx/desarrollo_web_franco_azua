@@ -96,12 +96,10 @@ def listado():
     start = (page - 1) * 5
     end = start + 5
     actividades_pagina = actividades[start:end]
-    actividadesDict = actividadesToDict(actividades)
     total_pages = (total - 1) // 5 + 1
     return render_template(
         "listado.html",
         actividades=actividades_pagina,
-        actividadesDict=actividadesDict,
         page=page,
         total_pages=total_pages
     )
