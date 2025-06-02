@@ -84,7 +84,7 @@ class ActividadTema(Base):
     __tablename__ = 'actividad_tema'
 
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    tema = Column(Enum('música', 'deporte', 'ciencias', 'religión', 'política', 'tecnología', 'juegos', 'baile', 'comida', 'otro'), nullable=False)
+    tema = Column(Enum('Música', 'Deporte', 'Ciencias', 'Religión', 'Política', 'Tecnología', 'Juegos', 'Baile', 'Comida', 'Otro'), nullable=False)
     glosa_otro = Column(String(15), nullable=True)
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
 
