@@ -1,6 +1,6 @@
 # --- Auxiliary Functions ---
 
-def actividadesToDict(actividades):
+def actividadesToDict(actividades):    
     return [
         {
             "id": actividad.id,
@@ -38,4 +38,25 @@ def regionesToDict(regiones):
             ]
         }
         for r in regiones
+    ]
+
+def actividadesParaEstadisticas(actividades):
+    dia_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+
+    return [
+        {
+            "dia_semana": dia_semana[actividad.dia_hora_inicio.weekday()], # Entrega el dia de la semana de la actividad (0 = Lunes, 6 = Domingo)
+            "mes": actividad.hora_inicio.month - 1, # Entrega el mes de la actividad (0 = Enero, 11 = Diciembre)
+            "bloque_horario": ( # Entrega el bloque horario de la actividad
+                "Mañana" if 6 <= actividad.hora_inicio.hour < 12 else
+                "Mediodía" if 12 <= actividad.hora_inicio.hour < 18 else
+                "Tarde" if 18 <= actividad.hora_inicio.hour <= 23 else
+                "Madrugada"
+            ), 
+            "tema": {
+                "tema": actividad.tema.tema if actividad.tema and actividad.tema.tema else "",
+                "glosa_otro": actividad.tema.glosa_otro if actividad.tema and actividad.tema.glosa_otro else ""
+            } if actividad.tema else {"tema": "", "glosa_otro": ""},
+        }
+        for actividad in actividades
     ]

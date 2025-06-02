@@ -3,7 +3,7 @@ from database import db
 from werkzeug.utils import secure_filename
 from markupsafe import escape
 from utils.validations import validate_formulario
-from utils.utils import actividadesToDict, regionesToDict
+from utils.utils import actividadesToDict, regionesToDict, actividadesParaEstadisticas
 import os
 UPLOAD_FOLDER = 'static/uploads'
 
@@ -113,10 +113,16 @@ def estadisticas():
 def api_actividades():
     actividades = db.get_todas_las_actividades()
     actividadesDict = actividadesToDict(actividades)
-    return jsonify(actividadesDict)
+    return jsonify({"status": "ok", "data": actividadesDict})
+
+@app.route("/api/actEstadisticas")
+def api_actEstadisticas():
+    actividades = db.get_todas_las_actividades()
+    actividadesDict = actividadesParaEstadisticas(actividades)
+    return jsonify({"status": "ok", "data": actividadesDict})
 
 @app.route("/api/regiones")
 def api_regiones():
     regiones = db.get_regiones()
     data = regionesToDict(regiones)
-    return jsonify(data)
+    return jsonify({"status": "ok", "data": data})
