@@ -42,7 +42,6 @@ def regionesToDict(regiones):
 
 def actividadesParaEstadisticas(actividades):
     dia_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
-
     return [
         {
             "dia_semana": dia_semana[actividad.dia_hora_inicio.weekday()], # Entrega el dia de la semana de la actividad (0 = Lunes, 6 = Domingo)

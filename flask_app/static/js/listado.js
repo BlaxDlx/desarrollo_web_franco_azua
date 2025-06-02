@@ -25,7 +25,7 @@ const mostrarDetalle = (id) => {
         <p><strong>Descripción:</strong> ${actividad.descripcion || "No info"}</p>
         <div class="galeria-fotos">
           ${actividad.fotos.map(foto => `
-            <img src="${foto.url}" alt="${foto.titulo}">
+            <img src="/static/${foto.ruta_archivo}" alt="${foto.nombre_archivo}" class="foto-miniatura" onclick="ampliarFoto(this.src)">
           `).join('')}
         </div>
       `;

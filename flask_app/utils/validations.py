@@ -54,7 +54,7 @@ def validate_tema(tema, otro_tema):
     temas_validos = ['música','deporte','ciencias','religión','política','tecnología','juegos','baile','comida','otro']
     if tema not in temas_validos:
         return "Debe seleccionar un tema válido."
-    if tema == "otro":
+    if tema == "Otro":
         if not otro_tema or len(otro_tema) < 3 or len(otro_tema) > 15:
             return "Debe indicar un tema entre 3 y 15 caracteres."
     return None
