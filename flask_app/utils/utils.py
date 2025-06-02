@@ -45,11 +45,11 @@ def actividadesParaEstadisticas(actividades):
     return [
         {
             "dia_semana": dia_semana[actividad.dia_hora_inicio.weekday()], # Entrega el dia de la semana de la actividad (0 = Lunes, 6 = Domingo)
-            "mes": actividad.hora_inicio.month - 1, # Entrega el mes de la actividad (0 = Enero, 11 = Diciembre)
+            "mes": actividad.dia_hora_inicio.month - 1, # Entrega el mes de la actividad (0 = Enero, 11 = Diciembre)
             "bloque_horario": ( # Entrega el bloque horario de la actividad
-                "Mañana" if 6 <= actividad.hora_inicio.hour < 12 else
-                "Mediodía" if 12 <= actividad.hora_inicio.hour < 18 else
-                "Tarde" if 18 <= actividad.hora_inicio.hour <= 23 else
+                "Mañana" if 6 <= actividad.dia_hora_inicio.hour < 12 else
+                "Mediodía" if 12 <= actividad.dia_hora_inicio.hour < 18 else
+                "Tarde" if 18 <= actividad.dia_hora_inicio.hour <= 23 else
                 "Madrugada"
             ), 
             "tema": {

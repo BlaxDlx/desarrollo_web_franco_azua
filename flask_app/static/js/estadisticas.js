@@ -4,21 +4,31 @@ let actividades = [];
 fetch('/api/actEstadisticas')
     .then(response => {
         if (!response.ok) throw new Error("Ocurrió un error al obtener las actividades.");
-        return response.json()})
+        return response.json();
+    })
     .then(json => {
-        actividades = json.data
+        actividades = json.data;
 
-        // Se cargan los gráficos de manera asíncronica
+        // Se cargan los gráficos de manera asíncrona con los datos actualizados
         const ctxLineas = document.getElementById('graficoLineas').getContext('2d');
-        new Chart(ctxLineas, configLineas);
+        new Chart(ctxLineas, { 
+            ...configLineas, // Se copian las propiedades del objeto configLineas
+            data: datosActividadesPorDia() // Y se modifica el data por los datos reales
+        });
 
         const ctxTorta = document.getElementById('graficoTorta').getContext('2d');
-        new Chart(ctxTorta, configTorta);
+        new Chart(ctxTorta, {
+            ...configTorta,
+            data: datosActividadesPorTipo()
+        });
 
         const ctxBarras = document.getElementById('graficoBarras').getContext('2d');
-        new Chart(ctxBarras, configBarras);
+        new Chart(ctxBarras, {
+            ...configBarras,
+            data: datosActividadesPorMesYHora()
+        });
     })
-    .catch(error => console.log('Error:',error));
+    .catch(error => console.log('Error:', error));
 
 // Gráfico de Líneas: Actividades por Día
 const datosActividadesPorDia = () => {
@@ -39,7 +49,7 @@ const datosActividadesPorDia = () => {
 
 const configLineas = {
     type: 'line',
-    data: datosActividadesPorDia(),
+    data: {}, // data vacía, luego con fetch se rellena con datos reales
     options: {
         responsive: true,
         scales: {
@@ -62,7 +72,7 @@ const configLineas = {
 // Gráfico de Torta: Actividades por Tipo (tema)
 const datosActividadesPorTipo = () => {
     const temas = ['Música', 'Deporte', 'Ciencias', 'Religión', 'Política', 'Tecnología', 'Juegos', 'Baile', 'Comida', 'Otro'];
-    const conteoPorTema = temas.map(tema => actividades.filter(a => a.tema === tema).length);
+    const conteoPorTema = temas.map(tema => actividades.filter(a => a.tema.tema === tema).length);
 
     return {
         labels: temas,
@@ -98,7 +108,7 @@ const datosActividadesPorTipo = () => {
 
 const configTorta = {
     type: 'pie',
-    data: datosActividadesPorTipo(),
+    data: {}, // data vacía, luego con fetch se rellena con datos reales
     options: {
         responsive: true,
         plugins: {
@@ -118,7 +128,7 @@ const configTorta = {
 
 // Gráfico de Barras: Actividades por Mes y Hora
 const datosActividadesPorMesYHora = () => {
-    meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
     // Se cuentan las actividades por mes y hora
     const conteo = {
@@ -157,7 +167,7 @@ const datosActividadesPorMesYHora = () => {
 
 const configBarras = {
     type: 'bar',
-    data: datosActividadesPorMesYHora(),
+    data: {}, // data vacía, luego con fetch se rellena con datos reales
     options: {
         responsive: true,
         scales: {
