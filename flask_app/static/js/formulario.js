@@ -4,9 +4,11 @@ let regiones = [];
 // === Funciones de inicialización ===
 const poblarRegiones = () => {
   fetch('/api/regiones')
-    .then(response => response.json())
-    .then(data => {
-      regiones = data;
+    .then(response => {
+      if (!response.ok) throw new Error("Ocurrió un error al obtener las regiones.");
+      return response.json()})
+    .then(json => {
+      regiones = json.data;
       const regionSelect = document.getElementById('region');
       regionSelect.innerHTML = '<option value="">Seleccione una región</option>';
       regiones.forEach(region => {
@@ -16,6 +18,7 @@ const poblarRegiones = () => {
         regionSelect.appendChild(option);
       })
     })
+    .catch(error => console.error('Error:',error));
 };
 
 const actualizarComunas = () => {
@@ -43,7 +46,7 @@ const mostrarCampoOtroTema = () => {
   const otroTemaDiv = document.getElementById('otro-tema');
   otroTemaDiv.innerHTML = '';
 
-  if (temaSelect.value === 'otro') {
+  if (temaSelect.value === 'Otro') {
     let input = document.createElement('input');
     input.type = 'text';
     input.name = 'otro-tema';
@@ -246,7 +249,7 @@ const validarFechaTermino = (inicio, termino) => {
 
 const validarTema = (tema, otroTemaInput) => {
   if (!tema) return "Debe seleccionar un tema.";
-  if (tema === 'otro' && (!otroTemaInput || otroTemaInput.value.trim().length < 3 || otroTemaInput.value.trim().length > 15)) {
+  if (tema === 'Otro' && (!otroTemaInput || otroTemaInput.value.trim().length < 3 || otroTemaInput.value.trim().length > 15)) {
     return "Debe indicar un tema entre 3 y 15 caracteres.";
   }
   return null;
@@ -437,7 +440,7 @@ const confirmarEnvio = () => {
   //   .catch((error) => {
   //     console.error('Error:', error);
   //   });
-  // Aquí puedes manejar la respuesta del servidor
+  // Aquí se puede manejar la respuesta del servidor
   // y mostrar un mensaje de éxito o error.
 };
 

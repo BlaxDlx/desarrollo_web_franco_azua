@@ -2,8 +2,13 @@
 // Mostrar detalles de una actividad
 const mostrarDetalle = (id) => {
   fetch('/api/actividades')
-    .then(response => response.json())
-    .then(actividades => {
+    .then(response => {
+      if (!response.ok) throw new Error("Hubo un error con la solicitud");
+      return response.json();
+    })
+    .then(json => {
+      if (json.status !== "ok") throw new Error("Respuesta inválida del servidor");
+      const actividades = json.data
       const actividad = actividades.find(a => a.id === id);
       if (!actividad) return;
 
@@ -26,7 +31,8 @@ const mostrarDetalle = (id) => {
       `;
       document.getElementById("tabla-listado").style.display = "none";
       document.getElementById("detalle-actividad").style.display = "block";
-    });
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 // Volver al listado
