@@ -10,11 +10,11 @@ INSERT INTO actividad (id, comuna_id, sector, nombre, email, celular, dia_hora_i
 
 -- Temas
 INSERT INTO actividad_tema (id, actividad_id, tema, glosa_otro) VALUES
-  (1, 1, 'deporte', NULL),
-  (2, 2, 'comida', NULL),
-  (3, 3, 'otro', 'arte'),
-  (4, 4, 'otro', 'pintura'),
-  (5, 5, 'otro', 'medioambiente');
+  (1, 1, 'Deporte', NULL),
+  (2, 2, 'Comida', NULL),
+  (3, 3, 'Otro', 'Arte'),
+  (4, 4, 'Otro', 'Pintura'),
+  (5, 5, 'Otro', 'Medioambiente');
 
 -- Fotos
 INSERT INTO foto (id, actividad_id, ruta_archivo, nombre_archivo) VALUES
@@ -23,3 +23,14 @@ INSERT INTO foto (id, actividad_id, ruta_archivo, nombre_archivo) VALUES
   (3, 3, 'uploads/ceramica.png', 'ceramica.png'),
   (4, 4, 'uploads/pintura.png', 'pintura.png'),
   (5, 5, 'uploads/huerta.png', 'huerta.png');
+
+-- Contactos
+INSERT INTO contactar_por (id, nombre, identificador, actividad_id) VALUES
+  (1, 'whatsapp', '+56991234567', 1),
+  (2, 'instagram', 'escuela_boxeo', 1),
+  (3, 'telegram', '@huertos_chile', 2),
+  (4, 'whatsapp', '+56991234579', 2),
+  (5, 'instagram', 'manos_creativas', 3),
+  (6, 'tiktok', 'pintura_arte', 4),
+  (7, 'whatsapp', '+56998765432', 5),
+  (8, 'otra', 'contacto_medioambiente@gmail.com', 5);
