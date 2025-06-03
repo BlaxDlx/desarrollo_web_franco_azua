@@ -49,7 +49,7 @@ def formulario():
             # Si hay errores, render_template con errores
             return render_template(
                 "formulario.html", 
-                errores=errores
+                errores=errores ##### VER SI METERLE EL HTTP 400 AQUI
                 )
         else:
             # Si todo bien, guardar en la base de datos con los datos sanitizados
@@ -126,3 +126,33 @@ def api_regiones():
     regiones = db.get_regiones()
     data = regionesToDict(regiones)
     return jsonify({"status": "ok", "data": data})
+
+@app.route('/api/comentarios/<int:actividad_id>', methods=['GET'])
+def api_get_comentarios(actividad_id):
+    comentarios = db.get_comentarios_por_actividad(actividad_id)
+    return jsonify({"status": "ok", "data": [
+        {
+            "nombre": c.nombre,
+            "texto": c.texto,
+            "fecha": c.fecha.strftime('%Y-%m-%d %H:%M')
+        } for c in comentarios
+    ]})
+
+@app.route('/api/comentarios/<int:actividad_id>', methods=['POST'])
+def nuevo_comentario(actividad_id):
+    data = request.get_json()
+    nombre = str(escape(data.get("nombre"))).strip() # Se sanitizan las entradas
+    texto = str(escape(data.get("texto"))).strip()
+    # Validaciones (no hechas aún)
+    errores = []
+    if not (3 <= len(nombre) <= 80):
+        errores.append("El nombre debe tener entre 3 y 80 caracteres.")
+    if not (5 <= len(texto) <= 300):
+        errores.append("El comentario debe tener entre 5 y 300 caracteres.")
+
+    if errores:
+        return jsonify({"status": "error", "errores": errores}), 400
+    
+    # Guardar el comentario
+    db.create_comentario(nombre, texto, actividad_id)
+    return jsonify({"mensaje": "Comentario agregado exitosamente"})

@@ -1,5 +1,7 @@
-from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum
+from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, desc
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship, joinedload
+from datetime import datetime
+from pytz import timezone
 
 DB_NAME = 'tarea2'
 DB_USERNAME = 'cc5002'
@@ -52,6 +54,7 @@ class Actividad(Base):
     fotos = relationship("Foto", back_populates="actividad")
     contactos = relationship("ContactarPor", back_populates="actividad")
     tema = relationship("ActividadTema", back_populates="actividad", uselist=False)
+    comentarios = relationship("Comentario", back_populates="actividad", cascade="all, delete-orphan")
 
     @property
     def hora_inicio(self):
@@ -90,6 +93,17 @@ class ActividadTema(Base):
 
     actividad = relationship("Actividad", back_populates="tema")
 
+class Comentario(Base):
+    __tablename__ = 'comentario'
+
+    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    nombre = Column(String(80), nullable=False)
+    texto = Column(String(300), nullable=False)
+    fecha = Column(DateTime, nullable=False, default=datetime.now(timezone('America/Santiago')))
+    actividad_id = Column(Integer, ForeignKey('actividad.id', ondelete="NO ACTION", onupdate="NO ACTION"), nullable=False)
+
+    actividad = relationship("Actividad", back_populates="comentarios")
+
 # --- Database Functions ---
 
 # Get registers from the database (en proceso)
@@ -118,6 +132,15 @@ def get_regiones():
         .all()
     session.close()
     return regiones
+
+def get_comentarios_por_actividad(actividad_id):
+    session = SessionLocal()
+    comentarios = session.query(Comentario)\
+        .filter_by(actividad_id=actividad_id)\
+        .order_by(desc(Comentario.fecha))\
+        .all()
+    session.close()
+    return comentarios
 
 # Create new registers in the database
 def create_actividad(comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion):
@@ -159,3 +182,12 @@ def create_foto(actividad_id, ruta_archivo, nombre_archivo):
     session.refresh(foto)
     session.close()
     return foto
+
+def create_comentario(nombre, texto, actividad_id):
+    session = SessionLocal()
+    nuevo = Comentario(nombre=nombre, texto=texto, actividad_id=actividad_id)
+    session.add(nuevo)
+    session.commit()
+    session.refresh(nuevo)
+    session.close()
+    return nuevo

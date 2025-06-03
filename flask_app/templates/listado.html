@@ -52,21 +52,27 @@
         {% endfor %}
     </tbody>
     </table>
-  </div>
 
-  <div class="paginacion" style="text-align:center; margin: 1em 0;">
-    {% if page > 1 %}
-      <a href="{{ url_for('listado', page=page-1) }}" class="boton">⬅ Anterior</a>
-    {% endif %}
-    <span>Página {{ page }} de {{ total_pages }}</span>
-    {% if page < total_pages %}
-      <a href="{{ url_for('listado', page=page+1) }}" class="boton">Siguiente ➡</a>
-    {% endif %}
+    <!-- Paginación -->
+    <div class="paginacion" style="text-align:center; margin: 1em 0;">
+      {% if page > 1 %}
+        <a href="{{ url_for('listado', page=page-1) }}" class="boton">⬅ Anterior</a>
+      {% endif %}
+      <span>Página {{ page }} de {{ total_pages }}</span>
+      {% if page < total_pages %}
+        <a href="{{ url_for('listado', page=page+1) }}" class="boton">Siguiente ➡</a>
+      {% endif %}
+    </div>
   </div>
 
   <!-- Sección de detalles ocultos por defecto -->
   <div id="detalle-actividad" style="display:none;">
-    <div id="contenido-detalle"></div>
+    <div id="detalle-container">
+      <!-- Parte izquierda -->
+      <div id="contenido-detalle"></div>
+      <!-- Parte derecha -->
+      <div id="comentarios-seccion"></div>
+    </div>
     <button class="boton" onclick="volverAlListado()">🔙 Volver al listado</button>
     <button class="boton" onclick="location.href='{{ url_for('portada') }}'">🏠 Volver a portada</button> 
   </div>
