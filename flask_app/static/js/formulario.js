@@ -429,7 +429,7 @@ const confirmarEnvio = () => {
   // Enviamos un submit real:
   document.getElementById('form-actividad').submit();
   // O si se quiere hacer una petición AJAX, se puede hacer aquí
-  // fetch('/ruta/a/tu/api', {
+  // fetch('/ruta/a/la/api', {
   //   method: 'POST',
   //   body: new FormData(document.getElementById('form-actividad'))
   // })

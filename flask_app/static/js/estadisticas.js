@@ -15,7 +15,8 @@ fetch('/api/actEstadisticas')
             ...configLineas, // Se copian las propiedades del objeto configLineas
             data: datosActividadesPorDia() // Y se modifica el data por los datos reales
         });
-
+        
+        // Para el resto es igual
         const ctxTorta = document.getElementById('graficoTorta').getContext('2d');
         new Chart(ctxTorta, {
             ...configTorta,
@@ -47,6 +48,7 @@ const datosActividadesPorDia = () => {
     };
 }
 
+// Las configuraciones se definen con datos vacíos
 const configLineas = {
     type: 'line',
     data: {}, // data vacía, luego con fetch se rellena con datos reales

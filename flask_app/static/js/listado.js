@@ -41,6 +41,7 @@ const mostrarDetalle = (id) => {
             </label><br>
             <button type="submit">Agregar comentario</button>
             <div id="comentario-errores" style="color:red;"></div>
+            <div id="comentario-exito" style="color:green; font-weight: bold;"></div>
           </form>
         </div>
       `;
@@ -74,10 +75,15 @@ const configurarFormularioComentarios = (actividadId) => {
       if (!res.ok) return res.json().then(data => Promise.reject(data));
       return res.json();
     })
-    .then(() => {
+    .then(data => {
       document.getElementById("comentario-errores").textContent = "";
       form.reset();
       cargarComentarios(actividadId);
+
+      // Mostrar mensaje de exito
+      const exitoDiv = document.getElementById("comentario-exito");
+      exitoDiv.textContent = data.mensaje;
+      setTimeout(() => exitoDiv.textContent = "", 3000);
     })
     .catch(data => {
       const erroresDiv = document.getElementById("comentario-errores");
@@ -86,6 +92,10 @@ const configurarFormularioComentarios = (actividadId) => {
       } else {
         erroresDiv.textContent = "Error inesperado al enviar el comentario.";
       }
+
+      // Limpiar mensaje de éxito si hay errores
+      const exitoDiv = document.getElementById("comentario-exito");
+      exitoDiv.textContent = "";
     });
   });
 };
@@ -102,10 +112,9 @@ const cargarComentarios= (actividadId) => {
     .then(data => {
       const lista = document.getElementById('comentarios-lista');
       lista.innerHTML = "";
-      if (data.status == "ok") {
-        comentarios = data.comentarios
-      }
+      if (data.status !== "ok") throw new Error("Respuesta inválida del servidor");
 
+      const comentarios = data.data;
       if (comentarios.length === 0) {
         lista.innerHTML = "No hay comentarios aún. ¡Sé el primero en comentar esta actividad! :D <br><br>";
       } else {
@@ -116,7 +125,8 @@ const cargarComentarios= (actividadId) => {
         }
       }
     })
-    .catch(() => {
+    .catch((error) => {
+      console.error('Error al cargar comentarios:', error);
       document.getElementById('comentarios-lista').innerHTML = "Error al cargar comentarios.<br><br>";
     });
 };
