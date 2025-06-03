@@ -51,7 +51,7 @@ def validate_descripcion(descripcion):
     return None
 
 def validate_tema(tema, otro_tema):
-    temas_validos = ['música','deporte','ciencias','religión','política','tecnología','juegos','baile','comida','otro']
+    temas_validos = ['Música','Deporte','Ciencias','Religión','Política','Tecnología','Juegos','Baile','Comida','Otro']
     if tema not in temas_validos:
         return "Debe seleccionar un tema válido."
     if tema == "Otro":
