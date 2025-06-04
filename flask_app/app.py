@@ -49,8 +49,8 @@ def formulario():
             # Si hay errores, render_template con errores
             return render_template(
                 "formulario.html", 
-                errores=errores ##### VER SI METERLE EL HTTP 400 AQUI
-                )
+                errores=errores
+                ), 400
         else:
             # Si todo bien, guardar en la base de datos con los datos sanitizados
             actividad = db.create_actividad(
