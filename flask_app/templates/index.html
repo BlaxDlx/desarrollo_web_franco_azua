@@ -22,17 +22,17 @@
         <div class="tarjeta">
             <h3>➕ Agregar actividad</h3>
             <p>Registra una nueva actividad recreativa en el sistema.</p>
-            <button onclick="location.href='{{ url_for('formulario') }}'">Agregar</button>
+            <a href="{{ url_for('formulario') }}" class="btn">Agregar</a>
         </div>
         <div class="tarjeta">
             <h3>📋 Ver listado</h3>
             <p>Revisa todas las actividades que se han agregado.</p>
-            <button onclick="location.href='{{ url_for('listado') }}'">Ver listado</button>
+            <a href="{{ url_for('listado') }}" class="btn">Ver listado</a>
         </div>
         <div class="tarjeta">
             <h3>📊 Ver estadísticas</h3>
             <p>Consulta estadísticas generales sobre las actividades.</p>
-            <button onclick="location.href='{{ url_for('estadisticas') }}'">Ver estadísticas</button>
+            <a href="{{ url_for('estadisticas') }}" class="btn">Ver estadísticas</a>
         </div>
     </div>
     <table class="mi-tabla">
