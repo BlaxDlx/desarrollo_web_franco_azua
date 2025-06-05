@@ -21,5 +21,9 @@ Además, debo agregar que cuando el formulario falla al enviarse desde el servid
 Nuevamente, hice lo mismo que en las secciones anteriores de usar una API y fetch para obtener datos asíncronos de la base de datos, en este caso, para algunos datos que se requerían para hacer los gráficos.
 También, a pesar de que en un inicio no usé las librerías que nos recomendaron (estaba ocupando Chart.js), la terminé cambiando. Al principio, solo quería probar como se vería con la librería Highcharts, pero cómo me terminó gustando cómo quedó al final, lo terminé dejando así, además que se me redujo bastante el código (aunque creo que es más por cómo había hecho la implementación con Chart.js). Estaba dispuesto a documentar cómo era Chart.js ya que técnicamente no lo habían pasado en clases como tal, pero ahora cómo lo cambié, ya no es necesario.
 
-## App.py
+## app.py
 En este apartado, puse todas las rutas necesarias, separando las API's de las rutas que conducen directamente a algun template. Además, cree funciones auxiliares que guardé en utils.py que me servían para convertir en diccionarios datos más grandes provenientes de la base de datos, para pasarlos a JS con jsonify, de este modo el código quedaba más limpio.
+
+## db.py
+Para la database no hay mucho que comentar, salvo que importé de la librería pytz, el método timezone para poder definir como predeterminado la hora actual en Santiago/Chile para la tabla de comentarios.
+De esta forma, apenas se agrega un comentario a la database, le agrega la fecha actual en Chile, ya que asumo que las actividades serán enfocadas a esta zona local al final.
