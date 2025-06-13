@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for, session, j
 from database import db
 from werkzeug.utils import secure_filename
 from markupsafe import escape
-from utils.validations import validate_formulario
+from utils.validations import validate_form, validate_comentario
 from utils.utils import actividadesToDict, regionesToDict, actividadesParaEstadisticas
 import os
 UPLOAD_FOLDER = 'static/uploads'
@@ -44,7 +44,7 @@ def formulario():
         formulario["termino"] = formulario["termino"] or None
 
         # Validar los datos del formulario
-        errores = validate_formulario(formulario, request.form)
+        errores = validate_form(formulario, request.form)
         if errores:
             # Si hay errores, render_template con errores
             return render_template(
@@ -90,7 +90,10 @@ def formulario():
 
 @app.route("/listado")
 def listado():
-    page = int(request.args.get("page", 1))
+    try:
+        page = int(request.args.get("page", 1))
+    except ValueError:
+        page = 1  # Si se intenta poner algún otro valor desde la URL, se redirige a la primera página
     actividades = db.get_todas_las_actividades()
     total = len(actividades)
     start = (page - 1) * 5
@@ -141,17 +144,13 @@ def api_get_comentarios(actividad_id):
 @app.route('/api/comentarios/<int:actividad_id>', methods=['POST'])
 def nuevo_comentario(actividad_id):
     data = request.get_json()
-    nombre = str(escape(data.get("nombre"))).strip() # Se sanitizan las entradas
-    texto = str(escape(data.get("texto"))).strip()
-    # Validaciones (no hechas aún)
-    errores = []
-    if not (3 <= len(nombre) <= 80):
-        errores.append("El nombre debe tener entre 3 y 80 caracteres.")
-    if not (5 <= len(texto) <= 300):
-        errores.append("El comentario debe tener entre 5 y 300 caracteres.")
-
+    if data is None:
+        return jsonify({"status": "error", "errores": ["Solicitud malformada. JSON no válido."]}), 400
+    errores = validate_comentario(data)
     if errores:
         return jsonify({"status": "error", "errores": errores}), 400
+    nombre = data.get("nombre")
+    texto = data.get("texto")
     
     # Guardar el comentario
     db.create_comentario(nombre, texto, actividad_id)

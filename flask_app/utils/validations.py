@@ -2,8 +2,18 @@ import re
 from markupsafe import escape
 import filetype
 
-# Validaciones individuales para cada campo del formulario
+# Validaciones individuales para cada campo del formulario de actividades
+def validate_region(region_id):
+    if not region_id:
+        return "Debe seleccionar una región."
+    try:
+        region_id = int(region_id)
+        return None
+    except (TypeError, ValueError):
+        return "Debe seleccionar una región válida."
 def validate_comuna(comuna_id):
+    if not comuna_id:
+        return "Debe seleccionar una comuna."
     try:
         comuna_id = int(comuna_id)
         return None
@@ -96,7 +106,7 @@ def sanitize_input(text):
     return escape(text) if text else text
 
 # Validaciones para el formulario de actividades
-def validate_formulario(formulario, request_form):
+def validate_form(formulario, request_form):
     errores = {}
 
     error = validate_comuna(formulario.get("comuna_id"))
@@ -132,5 +142,36 @@ def validate_formulario(formulario, request_form):
     # Sanitizar entradas de texto
     for campo in ["sector", "nombre", "email", "telefono", "descripcion", "otro_tema"]:
         formulario[campo] = sanitize_input(formulario.get(campo))
+
+    return errores
+
+# Validaciones individuales para cada campo del formulario de comentarios
+def validate_nombreComentario(nombre):
+    if not nombre or nombre.length == 0:
+        return "Debe ingresar un nombre (máx 200 caracteres)."
+    nombre = str(sanitize_input(nombre)).strip()
+    if not (3 <= len(nombre) <= 80):
+        return "El nombre debe tener entre 3 y 80 caracteres."
+    return None
+
+def validate_texto(texto):
+    if not texto or texto.length == 0:
+        return "Debe ingresar un comentario (máx 300 caracteres)."
+    texto = str(sanitize_input(texto)).strip()
+    if not (5 <= len(texto) <= 300):
+        return "El comentario debe tener entre 5 y 300 caracteres."
+    return None
+
+# Validaciones para el formulario de comentarios
+def validate_comentario(comentario):
+    errores = []
+
+    error = validate_nombreComentario(comentario.get("nombre"))
+    if error: errores.append(error)
+    comentario["nombre"] = str(sanitize_input(comentario.get("nombre"))).strip()
+
+    error = validate_texto(comentario.get("texto"))
+    if error: errores.append(error)
+    comentario["texto"] = str(sanitize_input(comentario.get("texto"))).strip()
 
     return errores
