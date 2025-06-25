@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8">
+  <title>Listado de Actividades</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/listado.css') }}">
+  <script defer src="{{ url_for('static', filename='js/listado.js') }}"></script>
+</head>
+
+<body>
+  <h1>Listado de Actividades</h1>
+
+  <!-- Sección de listado -->
+  <div id="tabla-listado">
+    <table class="mi-tabla">
+      <thead>
+        <tr>
+          <th>Inicio</th>
+          <th>Término</th>
+          <th>Comuna</th>
+          <th>Sector</th>
+          <th>Tema</th>
+          <th>Nombre del Organizador</th>
+          <th>Total Fotos</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for actividad in actividades %}
+          <tr onclick="mostrarDetalle({{ actividad.id }})" data-id="{{ actividad.id }}">
+            <td>{{ actividad.hora_inicio }}</td>
+            <td>
+              {% if actividad.dia_hora_termino %}
+                {{ actividad.hora_termino }}
+              {% endif %}
+            </td>
+            <td>{{ actividad.comuna.nombre }}</td>
+            <td>
+              {% if actividad.sector %}
+                {{ actividad.sector }}
+              {% endif %}
+            </td>
+            <td>
+              {% if actividad.tema.tema == 'Otro' %}
+                {{ actividad.tema.glosa_otro }}
+              {% else %}
+                {{ actividad.tema.tema }}
+              {% endif %}
+            </td>
+            <td>{{ actividad.nombre }}</td>
+            <td>{{ actividad.fotos|length }}</td>
+          </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <div class="paginacion" style="text-align:center; margin: 1em 0;">
+      {% if page > 1 %}
+        <a href="{{ url_for('listado', page=page-1) }}" class="boton">⬅ Anterior</a>
+      {% endif %}
+      <span>Página {{ page }} de {{ total_pages }}</span>
+      {% if page < total_pages %}
+        <a href="{{ url_for('listado', page=page+1) }}" class="boton">Siguiente ➡</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Sección de detalles ocultos por defecto -->
+  <div id="detalle-actividad" style="display:none;">
+    <div id="detalle-container">
+      <!-- Parte izquierda -->
+      <div id="contenido-detalle"></div>
+      <!-- Parte derecha -->
+      <div id="comentarios-seccion"></div>
+    </div>
+    <button class="boton" onclick="volverAlListado()">🔙 Volver al listado</button>
+    <button class="boton" onclick="location.href='{{ url_for('portada') }}'">🏠 Volver a portada</button> 
+  </div>
+
+  <!-- Modal para ampliar foto -->
+  <div id="modal-foto" style="display:none; justify-content:center">
+    <div id="contenedor-modal">
+      <img id="foto-ampliada" src="{{ url_for('static', filename='svg/placeholder.png') }}" alt="Foto ampliada" >
+      <button onclick="cerrarFoto()">Cerrar</button>
+    </div>
+  </div>
+</body>
+</html>

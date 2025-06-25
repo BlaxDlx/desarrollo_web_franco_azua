@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <title>Estadísticas de Actividades</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script> <!-- Inclusión de Chart.js -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estadisticas.css') }}">
+    <script type="module" src="{{ url_for('static', filename='js/estadisticas.js') }}"></script> <!-- Referencia al archivo JavaScript -->
+</head>
+<body>
+    <div class="header">
+        <h1>Estadísticas de Actividades Recreativas</h1>
+    </div>
+
+    <div class="container">
+        <!-- Gráfico de líneas: Actividades por Día -->
+        <div class="grafico">
+            <h3>Actividades por Día de la Semana</h3>
+            <div id="graficoLineas"></div> <!-- Aquí irá el gráfico -->
+        </div>
+
+        <!-- Gráfico de torta: Actividades por Tipo -->
+        <div class="grafico">
+            <h3>Actividades por Tipo</h3>
+            <div id="graficoTorta"></div> <!-- Aquí irá el gráfico -->
+        </div>
+
+        <!-- Gráfico de barras: Actividades por Mes y Hora -->
+        <div class="grafico">
+            <h3>Actividades por Mes y Hora</h3>
+            <div id="graficoBarras"></div> <!-- Aquí irá el gráfico -->
+        </div>
+
+        <!-- Enlace para volver a la portada -->
+        <div class="botones">
+            <button class="boton" onclick="location.href='{{ url_for('portada')}}'">Volver a la portada</button>
+        </div>
+    </div>
+</body>
+</html>
