@@ -147,7 +147,7 @@ def validate_form(formulario, request_form):
 
 # Validaciones individuales para cada campo del formulario de comentarios
 def validate_nombreComentario(nombre):
-    if not nombre or nombre.length == 0:
+    if not nombre or len(nombre) == 0:
         return "Debe ingresar un nombre (máx 200 caracteres)."
     nombre = str(sanitize_input(nombre)).strip()
     if not (3 <= len(nombre) <= 80):
@@ -155,7 +155,7 @@ def validate_nombreComentario(nombre):
     return None
 
 def validate_texto(texto):
-    if not texto or texto.length == 0:
+    if not texto or len(texto) == 0:
         return "Debe ingresar un comentario (máx 300 caracteres)."
     texto = str(sanitize_input(texto)).strip()
     if not (5 <= len(texto) <= 300):
