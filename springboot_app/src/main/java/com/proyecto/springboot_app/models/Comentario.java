@@ -26,6 +26,13 @@ public class Comentario {
 
     public Comentario() {}
 
+    public Comentario(String nombre, String texto, Actividad actividad) {
+        this.nombre = nombre;
+        this.texto = texto;
+        this.fecha = LocalDateTime.now();
+        this.actividad = actividad;
+    }
+
     public Comentario(String nombre,
                       String texto,
                       LocalDateTime fecha,

@@ -3,7 +3,9 @@ package com.proyecto.springboot_app.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
@@ -112,8 +114,19 @@ public class Actividad {
         return diaHoraInicio;
     }
 
+    public String getHoraInicio() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return diaHoraInicio.format(formatter);
+    }
+
     public LocalDateTime getDiaHoraTermino() {
         return diaHoraTermino;
+    }
+
+    public String getHoraTermino() {
+        if (diaHoraTermino == null) return "";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return diaHoraTermino.format(formatter);
     }
 
     public String getDescripcion() {
