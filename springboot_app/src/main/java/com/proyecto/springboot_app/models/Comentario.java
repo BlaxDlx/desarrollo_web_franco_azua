@@ -1,6 +1,8 @@
 package com.proyecto.springboot_app.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,16 +13,20 @@ public class Comentario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     @Column(nullable = false, length = 80)
     private String nombre;
 
+    @NotNull
     @Column(nullable = false, length = 300)
     private String texto;
 
+    @NotNull
     @Column(nullable = false)
     private LocalDateTime fecha;
 
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "actividad_id", nullable = false)
     private Actividad actividad;
 

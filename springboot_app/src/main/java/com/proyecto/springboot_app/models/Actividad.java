@@ -3,7 +3,6 @@ package com.proyecto.springboot_app.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -17,20 +16,24 @@ public class Actividad {
     private Integer id;
 
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "comuna_id", nullable = false)
     private Comuna comuna;
 
     private String sector;
 
+    @NotNull
     @Column(nullable = false, length = 200)
     private String nombre;
 
+    @NotNull
     @Column(nullable = false, length = 100)
     private String email;
 
     @Column(length = 15)
     private String celular;
 
+    @NotNull
     @Column(name = "dia_hora_inicio", nullable = false)
     private LocalDateTime diaHoraInicio;
 
@@ -129,6 +132,11 @@ public class Actividad {
         return diaHoraTermino.format(formatter);
     }
 
+    public boolean isActividadTerminada() {
+        return diaHoraTermino != null && diaHoraTermino.isBefore(LocalDateTime.now());
+    }
+
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -152,4 +160,8 @@ public class Actividad {
     public List<Nota> getNotas() {
         return notas;
     }
+
+public double getCalificacion() {
+    return notas.stream().mapToDouble(Nota::getNota).average().orElse(0.0);
+}
 }

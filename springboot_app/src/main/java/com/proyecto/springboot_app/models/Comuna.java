@@ -13,10 +13,12 @@ public class Comuna {
     @NotNull
     private Integer id;
 
+    @NotNull
     @Column(nullable = false, length = 200)
     private String nombre;
 
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "region_id", nullable = false)
     private Region region;
 

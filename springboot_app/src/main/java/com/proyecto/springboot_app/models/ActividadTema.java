@@ -1,6 +1,7 @@
 package com.proyecto.springboot_app.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "actividad_tema")
@@ -14,6 +15,7 @@ public class ActividadTema {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Tema tema;
@@ -22,6 +24,7 @@ public class ActividadTema {
     private String glosaOtro;
 
     @OneToOne
+    @NotNull
     @JoinColumn(name = "actividad_id", nullable = false)
     private Actividad actividad;
 

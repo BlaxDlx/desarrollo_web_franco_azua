@@ -13,6 +13,7 @@ public class Region {
     @NotNull
     private Integer id;
 
+    @NotNull
     @Column(nullable = false, length = 200)
     private String nombre;
 

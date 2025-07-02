@@ -8,21 +8,21 @@ import jakarta.validation.constraints.NotNull;
 public class Nota {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     @Column(nullable = false)
-    private Integer nota;
+    private Double nota;
 
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "actividad_id", nullable = false)
     private Actividad actividad;
 
     public Nota () {}
 
-    public Nota(Integer id, Integer nota, Actividad actividad) {
-        this.id = id;
+    public Nota(Double nota, Actividad actividad) {
         this.nota = nota;
         this.actividad = actividad;
     }
@@ -31,7 +31,7 @@ public class Nota {
         return id;
     }
 
-    public Integer getNota() {
+    public Double getNota() {
         return nota;
     }
 
