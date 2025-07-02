@@ -20,7 +20,7 @@ public class AppController {
     public String indexRoute(@RequestParam(name = "mensaje", required = false) String mensaje, Model model) {
         model.addAttribute("actividades", appService.getUltimasActividades(5));
         model.addAttribute("mensaje", mensaje);
-        return "index"; // renderiza templates/index.html
+        return "index";
     }
 
     @GetMapping("/formulario")
@@ -42,13 +42,13 @@ public class AppController {
         return "estadisticas";
     }
 
-    @GetMapping("/actividadEvaluaciones")
-    public String actividadEvaluacionesRoute(@RequestParam(name = "page", defaultValue = "1") int page, Model model) {
+    @GetMapping("/evaluar")
+    public String evaluarRoute(@RequestParam(name = "page", defaultValue = "1") int page, Model model) {
         Map<String, Object> datos = appService.getListadoPaginado(page, 5);
         model.addAttribute("actividades", datos.get("actividades"));
         model.addAttribute("page", datos.get("page"));
         model.addAttribute("total_pages", datos.get("total_pages"));
-        return "actividadEvaluaciones";
+        return "evaluar";
     }
 }
 

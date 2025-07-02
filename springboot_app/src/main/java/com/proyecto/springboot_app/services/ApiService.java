@@ -3,6 +3,8 @@ package com.proyecto.springboot_app.services;
 import com.proyecto.springboot_app.models.*;
 import com.proyecto.springboot_app.repositories.*;
 import com.proyecto.springboot_app.utils.ValidateComentario;
+import com.proyecto.springboot_app.utils.ValidateNota;
+
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,13 +16,16 @@ public class ApiService {
     private final ActividadRepository actividadRepository;
     private final RegionRepository regionRepository;
     private final ComentarioRepository comentarioRepository;
+    private final NotaRepository notaRepository;
 
     public ApiService(ActividadRepository actividadRepository,
                       RegionRepository regionRepository,
-                      ComentarioRepository comentarioRepository) {
+                      ComentarioRepository comentarioRepository,
+                      NotaRepository notaRepository) {
         this.actividadRepository = actividadRepository;
         this.regionRepository = regionRepository;
         this.comentarioRepository = comentarioRepository;
+        this.notaRepository = notaRepository;
     }
 
     public List<Actividad> getTodasLasActividades() {
@@ -85,5 +90,32 @@ public class ApiService {
         Comentario nuevo = new Comentario(data.get("nombre"), data.get("texto"), actividad);
         comentarioRepository.save(nuevo);
         return errores;
+    }
+
+    public List<String> nuevaNota(Integer id, Map<String, String> data) {
+        ValidateNota validateNota = new ValidateNota();
+        List<String> errores = new ArrayList<>();
+        Boolean valid = validateNota.isValid(data);
+        if (!valid) {
+            errores = validateNota.getErrores();
+            return errores;
+        }
+        Optional<Actividad> actividadOpt = actividadRepository.findById(id);
+        if (actividadOpt.isEmpty()) {
+            errores.add("Actividad no encontrada");
+            return errores;
+        }
+        Actividad actividad = actividadOpt.get();
+        // Crear y guardar la nueva nota
+        double valorNota = Double.parseDouble(data.get("nota"));
+        Nota nuevaNota = new Nota(valorNota, actividad);
+
+        // Guardar la nota
+        notaRepository.save(nuevaNota);
+
+        return errores;
+    }
+    public Actividad getActividadById(Integer id) {
+        return actividadRepository.findById(id).orElse(null);
     }
 }

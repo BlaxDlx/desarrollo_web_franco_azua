@@ -39,14 +39,31 @@ public class ApiController {
     }
 
     @PostMapping("/comentarios/{actividadId}")
+    @ResponseBody
     public Map<String, Object> postComentario(@PathVariable Integer actividadId,
                                               @RequestBody Map<String, String> data) {
         List<String> errores = apiService.nuevoComentario(actividadId, data);
         if (!errores.isEmpty()) {
             return Map.of("status", "error", "errores", errores);
         }
-        apiService.nuevoComentario(actividadId, data);
         return Map.of("status", "ok", "mensaje", "Comentario agregado exitosamente");
+    }
+
+    @PostMapping("/evaluar")
+    @ResponseBody
+    public Map<String, Object> evaluarActividadAjax(@RequestBody Map<String, String> body) {
+        Integer id = null;
+        try {
+            id = Integer.parseInt(body.get("actividadId"));
+        } catch (NumberFormatException e) {
+            return Map.of("status", "error", "mensaje", "Actividad no encontrada");
+        }
+        List<String> errores = apiService.nuevaNota(id, body);
+        if (!errores.isEmpty()) {
+            return Map.of("status", "error", "errores", errores);
+        }
+        Double nuevaCalificacion = apiService.getActividadById(id).getCalificacion();
+        return Map.of("status", "ok", "mensaje", "Nota agregada exitosamente", "calificacion", nuevaCalificacion);
     }
 }
 
