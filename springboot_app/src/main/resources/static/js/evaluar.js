@@ -5,6 +5,7 @@ const evaluarActividad = (event) => {
     if (valor === null) return;
     valor = parseFloat(valor);
     if (isNaN(valor) || valor < 1 || valor > 7) {
+        document.getElementById("nota-exito").textContent = "";
         document.getElementById("nota-errores").textContent = "La nota debe ser un número entre 1 y 7";
         return;
     }
@@ -19,6 +20,7 @@ const evaluarActividad = (event) => {
     })
     .then(data => {
         document.getElementById("nota-errores").textContent = "";
+        document.getElementById("nota-exito").textContent = "";
         if (data.status === 'ok') {
             // Actualiza solo la celda de la nota
             const notaCell = btn.parentElement.parentElement.querySelector('td:nth-child(6) span');
