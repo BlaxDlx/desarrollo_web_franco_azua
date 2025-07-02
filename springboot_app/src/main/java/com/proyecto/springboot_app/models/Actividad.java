@@ -161,7 +161,7 @@ public class Actividad {
         return notas;
     }
 
-public double getCalificacion() {
+    public double getCalificacion() {
     return notas.stream().mapToDouble(Nota::getNota).average().orElse(0.0);
 }
 }

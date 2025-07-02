@@ -38,7 +38,7 @@ public class ApiService {
         return actividades.stream()
                 .map(actividad -> {
                     Map<String, Object> actividadMap = new HashMap<>();
-                    Integer numeroDia = actividad.getDiaHoraInicio().getDayOfWeek().getValue() - 1; // 0 = Lunes, 6 = Domingo
+                    int numeroDia = actividad.getDiaHoraInicio().getDayOfWeek().getValue() - 1; // 0 = Lunes, 6 = Domingo
                     actividadMap.put("dia_semana", dia_semana.get(numeroDia)); // Entrega el dia de la semana de la actividad
                     actividadMap.put("mes", actividad.getDiaHoraInicio().getMonthValue() - 1); // Entrega el mes de la actividad (0 = Enero, 11 = Diciembre)
                     actividadMap.put("bloque_horario",
@@ -76,7 +76,7 @@ public class ApiService {
     public List<String> nuevoComentario(Integer actividadId, Map<String, String> data) {
         ValidateComentario validateComentario = new ValidateComentario();
         List<String> errores = new ArrayList<String>();
-        Boolean valid = validateComentario.isValid(data);
+        boolean valid = validateComentario.isValid(data);
         if (!valid) {
             errores = validateComentario.getErrores();
             return errores;
