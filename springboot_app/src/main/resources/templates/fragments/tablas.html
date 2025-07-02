@@ -1,0 +1,61 @@
+<table th:fragment="tabla-actividades" class="index-tabla">
+    <thead>
+        <tr>
+            <th>Inicio</th>
+            <th>Término</th>
+            <th>Comuna</th>
+            <th>Sector</th>
+            <th>Tema</th>
+            <th>Foto</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="actividad : ${actividades}">
+            <td th:text="${actividad.horaInicio}"></td>
+            <td th:text="${actividad.horaTermino != null ? actividad.horaTermino : ''}"></td>
+            <td th:text="${actividad.comuna.nombre}"></td>
+            <td th:text="${actividad.sector != null ? actividad.sector : ''}"></td>
+            <td>
+                <span th:if="${actividad.tema.tema == 'Otro'}" th:text="${actividad.tema.glosaOtro}"></span>
+                <span th:unless="${actividad.tema.tema == 'Otro'}" th:text="${actividad.tema.tema}"></span>
+            </td>
+            <td>
+                <img th:if="${actividad.fotos != null and #lists.size(actividad.fotos) > 0}"
+                     th:src="@{'/' + ${actividad.fotos[0].rutaArchivo}}"
+                     alt="Foto actividad" width="140">
+                <span th:unless="${actividad.fotos != null and #lists.size(actividad.fotos) > 0}">Sin foto</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table th:fragment="tabla-evaluar" class="tabla-evaluar">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha Inicio</th>
+            <th>Sector</th>
+            <th>Nombre</th>
+            <th>Tema</th>
+            <th>Nota</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="actividad : ${actividades}" th:if="${actividad.actividadTerminada}">
+            <td th:text="${actividad.id}"></td>
+            <td th:text="${actividad.horaInicio}"></td>
+            <td th:text="${actividad.sector != null ? actividad.sector : ''}"></td>
+            <td th:text="${actividad.nombre}"></td>
+            <td>
+                <span th:if="${actividad.tema.tema == 'Otro'}" th:text="${actividad.tema.glosaOtro}"></span>
+                <span th:unless="${actividad.tema.tema == 'Otro'}" th:text="${actividad.tema.tema}"></span>
+            </td>
+            <td>
+                <span th:if="${actividad.notas != null}" th:text="${actividad.calificacion}"></span>
+                <span th:unless="${actividad.notas != null}">-</span>
+            </td>
+            <td><button class="evaluar-btn" th:attr="data-id=${actividad.id}">Evaluar</button></td>
+        </tr>
+    </tbody>
+</table>"

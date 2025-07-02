@@ -1,0 +1,30 @@
+<div th:fragment="4acciones" class="acciones">
+    <div class="tarjeta">
+        <h3>➕ Agregar actividad</h3>
+        <p>Registra una nueva actividad recreativa en el sistema.</p>
+        <a th:href="@{/formulario}" class="btn">Agregar</a>
+    </div>
+    <div class="tarjeta">
+        <h3>📋 Ver listado</h3>
+        <p>Revisa todas las actividades que se han agregado.</p>
+        <a th:href="@{/listado}" class="btn">Ver listado</a>
+    </div>
+    <div class="tarjeta">
+        <h3>📊 Ver estadísticas</h3>
+        <p>Consulta estadísticas generales sobre las actividades.</p>
+        <a th:href="@{/estadisticas}" class="btn">Ver estadísticas</a>
+    </div>
+    <div class="tarjeta">
+        <h3>📝 Evaluar actividades</h3>
+        <p>Puntúa las actividades que se han agregado.</p>
+        <a th:href="@{/evaluar}" class="btn">Evaluar</a>
+    </div>
+</div>
+
+<div th:fragment="1accion" class="acciones">
+    <div class="tarjeta">
+        <h3>📝 Evaluar actividades</h3>
+        <p>Puntúa las actividades que se han agregado.</p>
+        <a th:href="@{/evaluar}" class="btn">Evaluar</a>
+    </div>
+</div>
