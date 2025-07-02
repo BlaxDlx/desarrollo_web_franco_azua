@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Estadísticas de Actividades</title>
-    <script src="https://code.highcharts.com/highcharts.js"></script> <!-- Inclusión de Chart.js -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estadisticas.css') }}">
-    <script type="module" src="{{ url_for('static', filename='js/estadisticas.js') }}"></script> <!-- Referencia al archivo JavaScript -->
+    <script src="https://code.highcharts.com/highcharts.js"></script> <!-- Inclusión de HighCharts.js -->
+    <link rel="stylesheet" th:href="@{/css/estadisticas.css}"> <!-- Referencia al archivo CSS -->
+    <script type="module" th:src="@{/js/estadisticas.js}"></script> <!-- Referencia al archivo JavaScript -->
 </head>
 <body>
     <div class="header">
@@ -33,7 +33,7 @@
 
         <!-- Enlace para volver a la portada -->
         <div class="botones">
-            <button class="boton" onclick="location.href='{{ url_for('portada')}}'">Volver a la portada</button>
+            <button class="boton" th:onclick="'location.href=\'' + @{/} + '\''">🏠 Volver a la portada</button>
         </div>
     </div>
 </body>

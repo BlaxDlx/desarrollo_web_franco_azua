@@ -15,57 +15,12 @@
             ¡Bienvenido/a!, le invitamos a revisar nuestra página para encontrar las actividades perfectas para ti    
         </h2>
     </div>
-    <div class="acciones">
-        <div class="tarjeta">
-            <h3>➕ Agregar actividad</h3>
-            <p>Registra una nueva actividad recreativa en el sistema.</p>
-            <a th:href="@{/formulario}" class="btn">Agregar</a>
-        </div>
-        <div class="tarjeta">
-            <h3>📋 Ver listado</h3>
-            <p>Revisa todas las actividades que se han agregado.</p>
-            <a th:href="@{/listado}" class="btn">Ver listado</a>
-        </div>
-        <div class="tarjeta">
-            <h3>📊 Ver estadísticas</h3>
-            <p>Consulta estadísticas generales sobre las actividades.</p>
-            <a th:href="@{/estadisticas}" class="btn">Ver estadísticas</a>
-        </div>
-        <div class="tarjeta">
-            <h3>📝 Evaluar actividades</h3>
-            <p>Puntúa las actividades que se han agregado.</p>
-            <a th:href="@{/evaluarActividades}" class="btn">Contactar</a>
-    </div>
-    <table class="mi-tabla">
-        <thead>
-            <tr>
-                <th>Inicio</th>
-                <th>Término</th>
-                <th>Comuna</th>
-                <th>Sector</th>
-                <th>Tema</th>
-                <th>Foto</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="actividad : ${actividades}">
-                <td th:text="${actividad.getHoraInicio()}"></td>
-                <td th:text="${actividad.getHoraTermino != null ? actividad.getHoraTermino : ''}"></td>
-                <td th:text="${actividad.getComuna.getNombre}"></td>
-                <td th:text="${actividad.getSector != null ? actividad.getSector : ''}"></td>
-                <td>
-                    <span th:if="${actividad.getTema.getTema == 'Otro'}" th:text="${actividad.getTema.getGlosaOtro}"></span>
-                    <span th:unless="${actividad.getTema.getTema == 'Otro'}" th:text="${actividad.getTema.getTema}"></span>
-                </td>
-                <td>
-                    <img th:if="${actividad.getFotos != null and #lists.size(actividad.getFotos) > 0}"
-                         th:src="@{'/' + ${actividad.getFotos[0].getRutaArchivo}}"
-                         alt="Foto actividad" width="140">
-                    <span th:unless="${actividad.getFotos != null and #lists.size(actividad.getFotos) > 0}">Sin foto</span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Acciones disponibles -->
+    <div th:replace="~{fragments/acciones :: 1accion}"></div>
+
+    <!-- Tabla de actividades -->
+    <table th:replace="~{fragments/tablas :: tabla-actividades}"></table>
+    
 </body>
 
 </html>
