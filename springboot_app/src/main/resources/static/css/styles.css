@@ -69,29 +69,29 @@ h1 {
   background-color: #004b99;
 }
 
-.mi-tabla {
+.index-tabla {
 width: 100%;
 border-collapse: collapse;
 margin-top: 20px;
 }
 
-.mi-tabla th, .mi-tabla td {
+.index-tabla th, .index-tabla td {
 border: 1px solid #ccc;
 padding: 10px;
 text-align: left;
 }
 
-.mi-tabla td img {
+.index-tabla td img {
   display: block;
   margin: 0 auto;
 }
 
 
-.mi-tabla thead {
+.index-tabla thead {
 background-color: #f2f2f2;
 }
 
-.mi-tabla tr:hover {
+.index-tabla tr:hover {
 background-color: #f9f9f9;
 }
 
