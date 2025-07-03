@@ -1,3 +1,4 @@
+<!-- Tabla para index.html -->
 <table th:fragment="tabla-actividades" class="index-tabla">
     <thead>
         <tr>
@@ -29,6 +30,7 @@
     </tbody>
 </table>
 
+<!-- Tabla para evaluar.html -->
 <table th:fragment="tabla-evaluar" class="tabla-evaluar">
     <thead>
         <tr>
@@ -52,10 +54,39 @@
                 <span th:unless="${actividad.tema.tema == 'Otro'}" th:text="${actividad.tema.tema}"></span>
             </td>
             <td>
-                <span th:if="${actividad.notas != null}" th:text="${actividad.calificacion}"></span>
-                <span th:unless="${actividad.notas != null}">-</span>
+                <span th:if="${actividad.notas != null and #lists.size(actividad.notas) > 0}" th:text="${#numbers.formatDecimal(actividad.calificacion, 1, 2)}"></span>
+                <span th:unless="${actividad.notas != null and #lists.size(actividad.notas) > 0}">-</span>
             </td>
             <td><button class="evaluar-btn" th:attr="data-id=${actividad.id}">Evaluar</button></td>
         </tr>
     </tbody>
-</table>"
+</table>
+
+<!-- Tabla para listado.html -->
+<table th:fragment="tabla-listado" class="mi-tabla">
+    <thead>
+    <tr>
+        <th>Inicio</th>
+        <th>Término</th>
+        <th>Comuna</th>
+        <th>Sector</th>
+        <th>Tema</th>
+        <th>Nombre del Organizador</th>
+        <th>Total Fotos</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="actividad : ${actividades}" th:onclick="'mostrarDetalle(' + ${actividad.getId} + ')'" th:attr="data-id=${actividad.getId}">
+        <td th:text="${actividad.getHoraInicio}"></td>
+        <td th:text="${actividad.getHoraTermino}"></td>
+        <td th:text="${actividad.getComuna.getNombre}"></td>
+        <td th:text="${actividad.getSector}"></td>
+        <td>
+        <span th:if="${actividad.getTema.getTema == 'Otro'}" th:text="${actividad.getTema.getGlosaOtro}"></span>
+        <span th:unless="${actividad.getTema.getTema == 'Otro'}" th:text="${actividad.getTema.getTema}"></span>
+        </td>
+        <td th:text="${actividad.getNombre}"></td>
+        <td th:text="${#lists.size(actividad.getFotos)}"></td>
+    </tr>
+    </tbody>
+</table>

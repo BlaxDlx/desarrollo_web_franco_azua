@@ -12,33 +12,8 @@
 
   <!-- Sección de listado -->
   <div id="tabla-listado">
-    <table class="mi-tabla">
-      <thead>
-        <tr>
-          <th>Inicio</th>
-          <th>Término</th>
-          <th>Comuna</th>
-          <th>Sector</th>
-          <th>Tema</th>
-          <th>Nombre del Organizador</th>
-          <th>Total Fotos</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="actividad : ${actividades}" th:onclick="'mostrarDetalle(' + ${actividad.getId} + ')'" th:attr="data-id=${actividad.getId}">
-          <td th:text="${actividad.getHoraInicio}"></td>
-          <td th:text="${actividad.getHoraTermino}"></td>
-          <td th:text="${actividad.getComuna.getNombre}"></td>
-          <td th:text="${actividad.getSector}"></td>
-          <td>
-            <span th:if="${actividad.getTema.getTema == 'Otro'}" th:text="${actividad.getTema.getGlosaOtro}"></span>
-            <span th:unless="${actividad.getTema.getTema == 'Otro'}" th:text="${actividad.getTema.getTema}"></span>
-          </td>
-          <td th:text="${actividad.getNombre}"></td>
-          <td th:text="${#lists.size(actividad.getFotos)}"></td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Tabla de actividades -->
+    <table th:replace="~{fragments/tablas :: tabla-listado}"></table>
 
     <!-- Paginación -->
     <div th:replace="fragments/paginacion :: paginacion" th:with="pagina=${pagina}, totalPaginas=${totalPaginas}, ruta=${/listado}"></div>
