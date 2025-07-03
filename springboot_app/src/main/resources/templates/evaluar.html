@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es-CL" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Evaluaciones de Actividades</title>
+  <link rel="stylesheet" th:href="@{/css/evaluar.css}">
+  <script defer th:src="@{/js/evaluar.js}"></script>
+</head>
+<body>
+  <h1>Actividades Realizadas</h1>
+  <!-- Tabla de actividades -->
+  <table th:replace="~{fragments/tablas :: tabla-evaluar}"></table>
+
+  <!-- Mensajes de error -->
+  <div id="nota-errores" style="color:red;"></div>
+
+  <!-- Mensajes de éxito -->
+  <div id="nota-exito" style="color:green;"></div>
+
+  <!-- Paginación -->
+  <div th:replace="~{fragments/paginacion :: paginacion(ruta='/evaluar', total_pages=${total_pages}, page=${page})}"></div>
+
+  <!-- Modal para evaluar actividad -->
+  <div id="modal-nota" class="modal-nota">
+    <div class="modal-contenido">
+      <h3>Ingresar Nota</h3>
+      <input id="input-nota" type="number" min="1" max="7" style="width:80px; text-align:center;">
+      <div id="modal-error" style="color:red; margin:0.5em 0;"> </div>
+      <button id="btn-guardar-nota" class="btn-guardar-nota">Guardar</button>
+      <button id="btn-cerrar-modal" class="btn-cerrar-modal">Cancelar</button>
+    </div>
+  </div>
+</body>
+</html>

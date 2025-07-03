@@ -1,0 +1,121 @@
+/* Estilos generales */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
+}
+
+h1 {
+  background-color: #0066cc;
+  color: white;
+  padding: 16px;
+  margin: 0;
+  text-align: center;
+}
+
+.container {
+  padding: 20px;
+}
+
+/* Tabla de evaluación */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+th {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #f1faff;
+  cursor: pointer;
+}
+
+/* Inputs y botones */
+input.nota-input {
+  width: 60px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.guardar-btn, .evaluar-btn, .boton, .btn-guardar-nota, .btn-cerrar-modal {
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 10px 16px;
+  border: none;
+  background-color: #0066cc;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.guardar-btn:hover, .evaluar-btn:hover, .boton:hover, .btn-guardar-nota:hover, .btn-cerrar-modal:hover {
+  background-color: #004999;
+}
+
+/* Paginación */
+.paginacion .boton {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 8px 16px;
+  background: #0066cc;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.paginacion .boton:hover {
+  background: #004999;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  table {
+    font-size: 13px;
+    width: 100%;
+  }
+  th, td {
+    padding: 8px 4px;
+  }
+}
+
+/* Modal: fondo oscuro y centrado */
+.modal-nota {
+  display:none; 
+  position:fixed; 
+  top:0; left:0; 
+  width:100vw; 
+  height:100vh; 
+  background:rgba(0,0,0,0.3); 
+  z-index:1000; 
+  align-items:center; 
+  justify-content:center;
+}
+
+/* El contenido del modal */
+.modal-nota .modal-contenido {
+  background: white;
+  padding: 2em;
+  border-radius: 8px;
+  min-width: 250px;
+  text-align: center;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}

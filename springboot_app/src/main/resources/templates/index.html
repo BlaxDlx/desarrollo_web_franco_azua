@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es-CL" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Actividades recreativas para ti</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+    <h1>Actividades recreativas</h1>
+    <div class="saludo">
+        <h2 class="mensaje-exito" th:if="${mensaje}"></h2>
+        <h2 th:unless="${mensaje}">
+            ¡Bienvenido/a!, le invitamos a revisar nuestra página para encontrar las actividades perfectas para ti    
+        </h2>
+    </div>
+    <!-- Acciones disponibles -->
+    <div th:replace="~{fragments/acciones :: 1accion}"></div>
+
+    <!-- Tabla de actividades -->
+    <table th:replace="~{fragments/tablas :: tabla-actividades}"></table>
+    
+</body>
+
+</html>

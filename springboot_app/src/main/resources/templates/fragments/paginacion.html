@@ -1,0 +1,5 @@
+<div th:fragment="paginacion(ruta, page, total_pages)" class="paginacion" style="text-align:center; margin: 1em 0;">
+    <a th:if="${page > 1}" th:href="@{${ruta}(page=${page-1})}" class="boton">⬅ Anterior</a>
+    <span th:text="'Página ' + ${page} + ' de ' + ${total_pages}"></span>
+    <a th:if="${page < total_pages}" th:href="@{${ruta}(page=${page+1})}" class="boton">Siguiente ➡</a>
+</div>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es-CL" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Listado de Actividades</title>
+  <link rel="stylesheet" th:href="@{/css/listado.css}">
+  <script defer th:href="@{/js/listado.js}"></script>
+</head>
+
+<body>
+  <h1>Listado de Actividades</h1>
+
+  <!-- Sección de listado -->
+  <div id="tabla-listado">
+    <!-- Tabla de actividades -->
+    <table th:replace="~{fragments/tablas :: tabla-listado}"></table>
+
+    <!-- Paginación -->
+    <div th:replace="fragments/paginacion :: paginacion" th:with="pagina=${pagina}, totalPaginas=${totalPaginas}, ruta=${/listado}"></div>
+  </div>
+
+  <!-- Sección de detalles ocultos por defecto -->
+  <div id="detalle-actividad" style="display:none;">
+    <div id="detalle-container">
+      <!-- Parte izquierda -->
+      <div id="contenido-detalle"></div>
+      <!-- Parte derecha -->
+      <div id="comentarios-seccion"></div>
+    </div>
+    <button class="boton" onclick="volverAlListado()">🔙 Volver al listado</button>
+    <button class="boton" th:onclick="'location.href=\'' + @{/} + '\''">🏠 Volver a portada</button> 
+  </div>
+
+  <!-- Modal para ampliar foto -->
+  <div id="modal-foto" style="display:none; justify-content:center">
+    <div id="contenedor-modal">
+      <img id="foto-ampliada" th:src="@{/svg/placeholder.png}" alt="Foto ampliada" >
+      <button onclick="cerrarFoto()">Cerrar</button>
+    </div>
+  </div>
+</body>
+</html>
